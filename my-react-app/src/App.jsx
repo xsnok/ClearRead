@@ -2,8 +2,23 @@ import { useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import callGemini from "./ai.js";
 
+// Speech function using Web Speech API
+const speakText = (text) => {
+  if ("speechSynthesis" in window) {
+    // Cancel any ongoing speech
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.8; // Slightly slower for clarity
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    window.speechSynthesis.speak(utterance);
+  }
+};
+
 // Draggable syllable component
-function DraggableSyllable({ syllable, index, isUsed }) {
+function DraggableSyllable({ syllable, index, isUsed, onSpeak }) {
   const [{ isDragging }, drag] = useDrag({
     type: "syllable",
     item: { syllable, index },
@@ -13,10 +28,34 @@ function DraggableSyllable({ syllable, index, isUsed }) {
     }),
   });
 
+  const handleSpeak = (e) => {
+    e.stopPropagation();
+    onSpeak(syllable);
+  };
+
   if (isUsed) {
     return (
-      <div className="px-8 py-6 bg-gray-200 text-gray-400 rounded-xl font-bold text-2xl cursor-not-allowed opacity-30 transition-all">
+      <div className="relative px-8 py-6 bg-gray-200 text-gray-400 rounded-xl font-bold text-2xl cursor-not-allowed opacity-30 transition-all">
         {syllable}
+        <button
+          onClick={handleSpeak}
+          className="absolute -top-2 -right-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full p-2 shadow-lg transition-all hover:scale-110"
+          title="Speak syllable"
+        >
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+            />
+          </svg>
+        </button>
       </div>
     );
   }
@@ -24,17 +63,36 @@ function DraggableSyllable({ syllable, index, isUsed }) {
   return (
     <div
       ref={drag}
-      className={`px-8 py-6 bg-linear-to-br from-indigo-500 to-purple-600 text-white rounded-xl font-bold text-2xl shadow-lg cursor-grab active:cursor-grabbing transition-all hover:scale-105 hover:shadow-xl ${
+      className={`relative px-8 py-6 bg-linear-to-br from-indigo-500 to-purple-600 text-white rounded-xl font-bold text-2xl shadow-lg cursor-grab active:cursor-grabbing transition-all hover:scale-105 hover:shadow-xl ${
         isDragging ? "opacity-50 scale-95" : "opacity-100"
       }`}
     >
       {syllable}
+      <button
+        onClick={handleSpeak}
+        className="absolute -top-2 -right-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full p-2 shadow-lg transition-all hover:scale-110 z-10"
+        title="Speak syllable"
+      >
+        <svg
+          className="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+          />
+        </svg>
+      </button>
     </div>
   );
 }
 
 // Dropped syllable in the answer area (can be reordered)
-function DroppedSyllable({ item, index, onRemove, onMove }) {
+function DroppedSyllable({ item, index, onRemove, onMove, onSpeak }) {
   const [{ isDragging }, drag] = useDrag({
     type: "dropped-syllable",
     item: { ...item, dropIndex: index },
@@ -57,22 +115,46 @@ function DroppedSyllable({ item, index, onRemove, onMove }) {
     }),
   });
 
+  const handleSpeak = (e) => {
+    e.stopPropagation();
+    onSpeak(item.syllable);
+  };
+
   return (
     <div
       ref={(node) => drag(drop(node))}
-      className={`px-8 py-6 bg-linear-to-br from-emerald-500 to-teal-600 text-white rounded-xl font-bold text-2xl shadow-lg cursor-pointer transition-all hover:scale-105 hover:shadow-xl ${
+      className={`relative px-8 py-6 bg-linear-to-br from-emerald-500 to-teal-600 text-white rounded-xl font-bold text-2xl shadow-lg cursor-pointer transition-all hover:scale-105 hover:shadow-xl ${
         isDragging ? "opacity-50" : "opacity-100"
       } ${isOver ? "ring-4 ring-indigo-400 ring-offset-2" : ""}`}
       onClick={() => onRemove(index)}
       title="Click to remove or drag to reorder"
     >
       {item.syllable}
+      <button
+        onClick={handleSpeak}
+        className="absolute -top-2 -right-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full p-2 shadow-lg transition-all hover:scale-110 z-10"
+        title="Speak syllable"
+      >
+        <svg
+          className="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+          />
+        </svg>
+      </button>
     </div>
   );
 }
 
 // Drop zone component
-function DropZone({ selectedOrder, onDrop, onMove, onRemove }) {
+function DropZone({ selectedOrder, onDrop, onMove, onRemove, onSpeak }) {
   const [{ isOver }, drop] = useDrop({
     accept: "syllable",
     drop: (item) => {
@@ -102,6 +184,7 @@ function DropZone({ selectedOrder, onDrop, onMove, onRemove }) {
             index={index}
             onRemove={onRemove}
             onMove={onMove}
+            onSpeak={onSpeak}
           />
         ))
       )}
@@ -120,18 +203,32 @@ function App() {
   const [isCorrect, setIsCorrect] = useState(null);
   const [gameStarted, setGameStarted] = useState(false);
 
-  const syllableSchema = {
+  const multipleWordsSchema = {
     type: "object",
     properties: {
-      syllables: {
+      words: {
         type: "array",
-        description: "Break the word into syllables and return as an array",
+        description: "Array of word objects with their syllables",
         items: {
-          type: "string",
+          type: "object",
+          properties: {
+            word: {
+              type: "string",
+              description: "The original word",
+            },
+            syllables: {
+              type: "array",
+              description: "Array of syllables for this word",
+              items: {
+                type: "string",
+              },
+            },
+          },
+          required: ["word", "syllables"],
         },
       },
     },
-    required: ["syllables"],
+    required: ["words"],
   };
 
   // Scramble array function
@@ -144,31 +241,40 @@ function App() {
     return scrambled;
   };
 
-  // Process multiple words and get syllables for each
+  // Process multiple words in a single API call
   const processMultipleWords = async (wordsList) => {
-    const processedWords = [];
-
-    for (const word of wordsList) {
-      try {
-        const result = await callGemini(
-          `Break the word "${word.trim()}" into syllables. Return only the syllables as an array.`,
-          syllableSchema
-        );
-
-        if (result.syllables && Array.isArray(result.syllables)) {
-          processedWords.push({
-            word: word.trim(),
-            syllables: result.syllables,
-          });
-        } else {
-          throw new Error(`Invalid response format for word: ${word}`);
-        }
-      } catch (err) {
-        throw new Error(`Failed to process word "${word}": ${err.message}`);
-      }
+    if (wordsList.length === 0) {
+      return [];
     }
 
-    return processedWords;
+    try {
+      // Create a prompt that requests syllables for all words at once
+      const wordsString = wordsList.map((w) => w.trim()).join(", ");
+      const prompt = `Break each of the following words into syllables: ${wordsString}. Return a JSON object with an array of word objects, where each object contains the original word and an array of its syllables.`;
+
+      const result = await callGemini(prompt, multipleWordsSchema);
+
+      if (result.words && Array.isArray(result.words)) {
+        // Validate that we got syllables for all words
+        const processedWords = result.words.map((item) => ({
+          word: item.word.trim(),
+          syllables: item.syllables,
+        }));
+
+        // Check if we got all words
+        if (processedWords.length !== wordsList.length) {
+          console.warn(
+            `Expected ${wordsList.length} words but got ${processedWords.length}`
+          );
+        }
+
+        return processedWords;
+      } else {
+        throw new Error("Invalid response format: expected 'words' array");
+      }
+    } catch (err) {
+      throw new Error(`Failed to process words: ${err.message}`);
+    }
   };
 
   const handleStartGame = async () => {
@@ -379,7 +485,26 @@ function App() {
       <div className="flex-1 flex flex-col items-center justify-center max-w-6xl mx-auto w-full py-4">
         {/* Word Display */}
         <div className="text-center mb-8 w-full">
-          <div className="inline-block p-8 bg-white rounded-3xl shadow-xl border-2 border-gray-200">
+          <div className="inline-block p-8 bg-white rounded-3xl shadow-xl border-2 border-gray-200 relative">
+            <button
+              onClick={() => speakText(currentWord?.word || "")}
+              className="absolute top-4 right-4 bg-indigo-500 hover:bg-indigo-600 text-white rounded-full p-3 shadow-lg transition-all hover:scale-110"
+              title="Speak word"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+                />
+              </svg>
+            </button>
             <h2 className="text-6xl md:text-7xl font-bold text-gray-800 mb-3">
               {currentWord?.word}
             </h2>
@@ -400,6 +525,7 @@ function App() {
             onDrop={handleDrop}
             onMove={handleMove}
             onRemove={handleRemove}
+            onSpeak={speakText}
           />
         </div>
 
@@ -417,6 +543,7 @@ function App() {
                   syllable={syllable}
                   index={index}
                   isUsed={isUsed}
+                  onSpeak={speakText}
                 />
               );
             })}
