@@ -1,42 +1,312 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
+/* Dyslexia-friendly game styles */
+.game-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.game-content {
+  max-width: 900px;
+  width: 100%;
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.game-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 0.5rem 0;
   text-align: center;
+  letter-spacing: -0.02em;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.game-subtitle {
+  font-size: 1.25rem;
+  color: #4a5568;
+  text-align: center;
+  margin-bottom: 2rem;
+  line-height: 1.6;
 }
 
-@keyframes logo-spin {
+.input-section {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.word-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 1rem 1.5rem;
+  font-size: 1.5rem;
+  border: 3px solid #cbd5e0;
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.word-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.word-input:disabled {
+  background-color: #f7fafc;
+  cursor: not-allowed;
+}
+
+.start-button {
+  padding: 1rem 2.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.start-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.start-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.error-message {
+  background-color: #fed7d7;
+  color: #c53030;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border: 2px solid #fc8181;
+}
+
+.game-area {
+  margin-top: 2rem;
+}
+
+.word-display {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f6f8fb 0%, #e9ecef 100%);
+  border-radius: 15px;
+  border: 3px solid #e2e8f0;
+}
+
+.word-display h2 {
+  font-size: 2.5rem;
+  color: #2d3748;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+
+.syllable-count {
+  font-size: 1.2rem;
+  color: #718096;
+  margin: 0;
+  font-weight: 500;
+}
+
+.drop-zone-section {
+  margin-bottom: 2.5rem;
+}
+
+.drop-zone-section h3 {
+  font-size: 1.5rem;
+  color: #2d3748;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.drop-zone {
+  min-height: 120px;
+  border: 4px dashed #cbd5e0;
+  border-radius: 15px;
+  padding: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  background: #f7fafc;
+  transition: all 0.3s ease;
+}
+
+.drop-zone:hover {
+  border-color: #667eea;
+  background: #edf2f7;
+}
+
+.drop-zone-placeholder {
+  width: 100%;
+  text-align: center;
+  color: #a0aec0;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 2rem;
+}
+
+.scrambled-section {
+  margin-bottom: 2rem;
+}
+
+.scrambled-section h3 {
+  font-size: 1.5rem;
+  color: #2d3748;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.scrambled-syllables {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.syllable-tile {
+  padding: 1.25rem 2rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  user-select: none;
+  min-width: 80px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.syllable-tile.available {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  cursor: grab;
+  border: 3px solid transparent;
+}
+
+.syllable-tile.available:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.syllable-tile.available:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+}
+
+.syllable-tile.selected {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+  cursor: pointer;
+  border: 3px solid #2f855a;
+}
+
+.syllable-tile.selected:hover {
+  background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+  transform: scale(1.05);
+}
+
+.syllable-tile.used {
+  background: #e2e8f0;
+  color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.result-message {
+  padding: 1.5rem 2rem;
+  border-radius: 15px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border: 3px solid;
+  animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(-20px);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+.result-message.correct {
+  background: #c6f6d5;
+  color: #22543d;
+  border-color: #48bb78;
+}
+
+.result-message.incorrect {
+  background: #fed7d7;
+  color: #742a2a;
+  border-color: #fc8181;
+}
+
+.result-icon {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.reset-button {
+  width: 100%;
+  padding: 1.25rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  background: #edf2f7;
+  color: #2d3748;
+  border: 3px solid #cbd5e0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.reset-button:hover {
+  background: #e2e8f0;
+  border-color: #a0aec0;
+  transform: translateY(-2px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .game-content {
+    padding: 1.5rem;
   }
-}
 
-.card {
-  padding: 2em;
-}
+  .game-title {
+    font-size: 2rem;
+  }
 
-.read-the-docs {
-  color: #888;
+  .word-input {
+    font-size: 1.25rem;
+  }
+
+  .syllable-tile {
+    font-size: 1.5rem;
+    padding: 1rem 1.5rem;
+  }
 }
