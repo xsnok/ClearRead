@@ -30,13 +30,15 @@ function DraggableSyllable({ syllable, index, isUsed, onSpeak }) {
 
   const handleSpeak = (e) => {
     e.stopPropagation();
-    onSpeak(syllable);
+    // Use pronunciation if available, otherwise use text
+    const textToSpeak = syllable.pronunciation || syllable.text || syllable;
+    onSpeak(textToSpeak);
   };
 
   if (isUsed) {
     return (
       <div className="relative px-8 py-6 bg-gray-200 text-gray-400 rounded-xl font-bold text-2xl cursor-not-allowed opacity-30 transition-all">
-        {syllable}
+        {syllable.text || syllable}
         <button
           onClick={handleSpeak}
           className="absolute -top-2 -right-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full p-2 shadow-lg transition-all hover:scale-110"
@@ -67,7 +69,7 @@ function DraggableSyllable({ syllable, index, isUsed, onSpeak }) {
         isDragging ? "opacity-50 scale-95" : "opacity-100"
       }`}
     >
-      {syllable}
+      {syllable.text || syllable}
       <button
         onClick={handleSpeak}
         className="absolute -top-2 -right-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full p-2 shadow-lg transition-all hover:scale-110 z-10"
@@ -117,7 +119,10 @@ function DroppedSyllable({ item, index, onRemove, onMove, onSpeak }) {
 
   const handleSpeak = (e) => {
     e.stopPropagation();
-    onSpeak(item.syllable);
+    // Use pronunciation if available, otherwise use text
+    const textToSpeak =
+      item.syllable?.pronunciation || item.syllable?.text || item.syllable;
+    onSpeak(textToSpeak);
   };
 
   return (
@@ -129,7 +134,7 @@ function DroppedSyllable({ item, index, onRemove, onMove, onSpeak }) {
       onClick={() => onRemove(index)}
       title="Click to remove or drag to reorder"
     >
-      {item.syllable}
+      {item.syllable?.text || item.syllable}
       <button
         onClick={handleSpeak}
         className="absolute -top-2 -right-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full p-2 shadow-lg transition-all hover:scale-110 z-10"
@@ -208,7 +213,8 @@ function App() {
     properties: {
       words: {
         type: "array",
-        description: "Array of word objects with their syllables",
+        description:
+          "Array of word objects with their syllables and pronunciations",
         items: {
           type: "object",
           properties: {
@@ -216,15 +222,32 @@ function App() {
               type: "string",
               description: "The original word",
             },
+            phoneticSpelling: {
+              type: "string",
+              description:
+                "The phonetic spelling of the entire word (e.g., /fʌŋkʃənəl/ or fuhngk-shuh-nuhl)",
+            },
             syllables: {
               type: "array",
-              description: "Array of syllables for this word",
+              description: "Array of syllable objects for this word",
               items: {
-                type: "string",
+                type: "object",
+                properties: {
+                  text: {
+                    type: "string",
+                    description: "The syllable text as it appears in the word",
+                  },
+                  pronunciation: {
+                    type: "string",
+                    description:
+                      "How to pronounce this syllable as it sounds in the word (phonetic spelling or pronunciation guide)",
+                  },
+                },
+                required: ["text", "pronunciation"],
               },
             },
           },
-          required: ["word", "syllables"],
+          required: ["word", "phoneticSpelling", "syllables"],
         },
       },
     },
@@ -248,17 +271,28 @@ function App() {
     }
 
     try {
-      // Create a prompt that requests syllables for all words at once
+      // Create a prompt that requests syllables with pronunciations for all words at once
       const wordsString = wordsList.map((w) => w.trim()).join(", ");
-      const prompt = `Break each of the following words into syllables: ${wordsString}. Return a JSON object with an array of word objects, where each object contains the original word and an array of its syllables.`;
+      const prompt = `Break each of the following words into syllables: ${wordsString}. For each word, provide:
+1. The phonetic spelling of the entire word (use IPA notation like /fʌŋkʃənəl/ or simple phonetic spelling like "fuhngk-shuh-nuhl")
+2. For each syllable, provide both the text (as it appears in the word) and its pronunciation (how it sounds when spoken in the context of the word)
+
+Return a JSON object with an array of word objects, where each object contains:
+- 'word': the original word
+- 'phoneticSpelling': the phonetic spelling of the entire word
+- 'syllables': an array of syllable objects with 'text' and 'pronunciation' fields`;
 
       const result = await callGemini(prompt, multipleWordsSchema);
 
       if (result.words && Array.isArray(result.words)) {
-        // Validate that we got syllables for all words
+        // Process the words and syllables with pronunciations
         const processedWords = result.words.map((item) => ({
           word: item.word.trim(),
-          syllables: item.syllables,
+          phoneticSpelling: item.phoneticSpelling || item.word.trim(),
+          syllables: item.syllables.map((syllable) => ({
+            text: syllable.text,
+            pronunciation: syllable.pronunciation,
+          })),
         }));
 
         // Check if we got all words
@@ -363,8 +397,16 @@ function App() {
       return;
     }
 
-    const userAnswer = order.map((item) => item.syllable).join("");
-    const correctAnswer = words[currentQuestionIndex].syllables.join("");
+    // Compare using text property if syllable is an object, otherwise use the syllable directly
+    const userAnswer = order
+      .map((item) => {
+        const syllable = item.syllable;
+        return syllable?.text || syllable;
+      })
+      .join("");
+    const correctAnswer = words[currentQuestionIndex].syllables
+      .map((syllable) => syllable.text || syllable)
+      .join("");
 
     setIsCorrect(userAnswer === correctAnswer);
   };
@@ -483,7 +525,7 @@ function App() {
 
       {/* Game Content */}
       <div className="flex-1 flex flex-col items-center justify-center max-w-6xl mx-auto w-full py-4">
-        {/* Word Display */}
+        {/* Phonetic Spelling Display */}
         <div className="text-center mb-8 w-full">
           <div className="inline-block p-8 bg-white rounded-3xl shadow-xl border-2 border-gray-200 relative">
             <button
@@ -505,10 +547,10 @@ function App() {
                 />
               </svg>
             </button>
-            <h2 className="text-6xl md:text-7xl font-bold text-gray-800 mb-3">
-              {currentWord?.word}
+            <h2 className="text-5xl md:text-6xl font-bold text-indigo-700 mb-3 font-mono">
+              {currentWord?.phoneticSpelling || currentWord?.word}
             </h2>
-            <p className="text-xl text-gray-600 font-medium">
+            <p className="text-lg text-gray-600 font-medium">
               {currentWord?.syllables.length} syllable
               {currentWord?.syllables.length !== 1 ? "s" : ""}
             </p>
