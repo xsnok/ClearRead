@@ -1,0 +1,449 @@
+{
+  "words": [
+    {
+      "word": "psychology",
+      "phoneticSpelling": "/saɪˈkɑlədʒi/",
+      "letterSounds": [
+        {
+          "grapheme": "p",
+          "phoneme": "/s/",
+          "readablePhonetic": "suh",
+          "position": 0
+        },
+        {
+          "grapheme": "s",
+          "phoneme": "/s/",
+          "readablePhonetic": "suh",
+          "position": 1
+        },
+        {
+          "grapheme": "y",
+          "phoneme": "/aɪ/",
+          "readablePhonetic": "eye",
+          "position": 2
+        },
+        {
+          "grapheme": "ch",
+          "phoneme": "/k/",
+          "readablePhonetic": "kuh",
+          "position": 3
+        },
+        {
+          "grapheme": "o",
+          "phoneme": "/ɑ/",
+          "readablePhonetic": "ah",
+          "position": 4
+        },
+        {
+          "grapheme": "l",
+          "phoneme": "/l/",
+          "readablePhonetic": "luh",
+          "position": 5
+        },
+        {
+          "grapheme": "o",
+          "phoneme": "/ə/",
+          "readablePhonetic": "uh",
+          "position": 6
+        },
+        {
+          "grapheme": "g",
+          "phoneme": "/dʒ/",
+          "readablePhonetic": "juh",
+          "position": 7
+        },
+        {
+          "grapheme": "y",
+          "phoneme": "/i/",
+          "readablePhonetic": "ee",
+          "position": 8
+        }
+      ]
+    },
+    {
+      "word": "rhythm",
+      "phoneticSpelling": "/ˈrɪðəm/",
+      "letterSounds": [
+        {
+          "grapheme": "rh",
+          "phoneme": "/r/",
+          "readablePhonetic": "ruh",
+          "position": 0
+        },
+        {
+          "grapheme": "y",
+          "phoneme": "/ɪ/",
+          "readablePhonetic": "ih",
+          "position": 1
+        },
+        {
+          "grapheme": "th",
+          "phoneme": "/ð/",
+          "readablePhonetic": "thuh",
+          "position": 2
+        },
+        {
+          "grapheme": "m",
+          "phoneme": "/m/",
+          "readablePhonetic": "muh",
+          "position": 3
+        }
+      ]
+    },
+    {
+      "word": "mnemonic",
+      "phoneticSpelling": "/nɪˈmɑnɪk/",
+      "letterSounds": [
+        {
+          "grapheme": "mn",
+          "phoneme": "/n/",
+          "readablePhonetic": "nuh",
+          "position": 0
+        },
+        {
+          "grapheme": "e",
+          "phoneme": "/ɪ/",
+          "readablePhonetic": "ih",
+          "position": 1
+        },
+        {
+          "grapheme": "m",
+          "phoneme": "/m/",
+          "readablePhonetic": "muh",
+          "position": 2
+        },
+        {
+          "grapheme": "o",
+          "phoneme": "/ɑ/",
+          "readablePhonetic": "ah",
+          "position": 3
+        },
+        {
+          "grapheme": "n",
+          "phoneme": "/n/",
+          "readablePhonetic": "nuh",
+          "position": 4
+        },
+        {
+          "grapheme": "i",
+          "phoneme": "/ɪ/",
+          "readablePhonetic": "ih",
+          "position": 5
+        },
+        {
+          "grapheme": "c",
+          "phoneme": "/k/",
+          "readablePhonetic": "kuh",
+          "position": 6
+        }
+      ]
+    },
+    {
+      "word": "xylophone",
+      "phoneticSpelling": "/ˈzaɪləfoʊn/",
+      "letterSounds": [
+        {
+          "grapheme": "x",
+          "phoneme": "/z/",
+          "readablePhonetic": "zuh",
+          "position": 0
+        },
+        {
+          "grapheme": "y",
+          "phoneme": "/aɪ/",
+          "readablePhonetic": "eye",
+          "position": 1
+        },
+        {
+          "grapheme": "l",
+          "phoneme": "/l/",
+          "readablePhonetic": "luh",
+          "position": 2
+        },
+        {
+          "grapheme": "o",
+          "phoneme": "/ə/",
+          "readablePhonetic": "uh",
+          "position": 3
+        },
+        {
+          "grapheme": "ph",
+          "phoneme": "/f/",
+          "readablePhonetic": "fuh",
+          "position": 4
+        },
+        {
+          "grapheme": "o",
+          "phoneme": "/oʊ/",
+          "readablePhonetic": "oh",
+          "position": 5
+        },
+        {
+          "grapheme": "n",
+          "phoneme": "/n/",
+          "readablePhonetic": "nuh",
+          "position": 6
+        },
+        {
+          "grapheme": "e",
+          "phoneme": "",
+          "readablePhonetic": "",
+          "position": 7
+        }
+      ]
+    },
+    {
+      "word": "chthonic",
+      "phoneticSpelling": "/ˈθɑnɪk/",
+      "letterSounds": [
+        {
+          "grapheme": "ch",
+          "phoneme": "",
+          "readablePhonetic": "",
+          "position": 0
+        },
+        {
+          "grapheme": "th",
+          "phoneme": "/θ/",
+          "readablePhonetic": "thuh",
+          "position": 1
+        },
+        {
+          "grapheme": "o",
+          "phoneme": "/ɑ/",
+          "readablePhonetic": "ah",
+          "position": 2
+        },
+        {
+          "grapheme": "n",
+          "phoneme": "/n/",
+          "readablePhonetic": "nuh",
+          "position": 3
+        },
+        {
+          "grapheme": "i",
+          "phoneme": "/ɪ/",
+          "readablePhonetic": "ih",
+          "position": 4
+        },
+        {
+          "grapheme": "c",
+          "phoneme": "/k/",
+          "readablePhonetic": "kuh",
+          "position": 5
+        }
+      ]
+    },
+    {
+      "word": "symphony",
+      "phoneticSpelling": "/ˈsɪmfəni/",
+      "letterSounds": [
+        {
+          "grapheme": "s",
+          "phoneme": "/s/",
+          "readablePhonetic": "suh",
+          "position": 0
+        },
+        {
+          "grapheme": "y",
+          "phoneme": "/ɪ/",
+          "readablePhonetic": "ih",
+          "position": 1
+        },
+        {
+          "grapheme": "m",
+          "phoneme": "/m/",
+          "readablePhonetic": "muh",
+          "position": 2
+        },
+        {
+          "grapheme": "ph",
+          "phoneme": "/f/",
+          "readablePhonetic": "fuh",
+          "position": 3
+        },
+        {
+          "grapheme": "o",
+          "phoneme": "/ə/",
+          "readablePhonetic": "uh",
+          "position": 4
+        },
+        {
+          "grapheme": "n",
+          "phoneme": "/n/",
+          "readablePhonetic": "nuh",
+          "position": 5
+        },
+        {
+          "grapheme": "y",
+          "phoneme": "/i/",
+          "readablePhonetic": "ee",
+          "position": 6
+        }
+      ]
+    },
+    {
+      "word": "pneumonia",
+      "phoneticSpelling": "/nuˈmoʊniə/",
+      "letterSounds": [
+        {
+          "grapheme": "p",
+          "phoneme": "",
+          "readablePhonetic": "",
+          "position": 0
+        },
+        {
+          "grapheme": "n",
+          "phoneme": "/n/",
+          "readablePhonetic": "nuh",
+          "position": 1
+        },
+        {
+          "grapheme": "eu",
+          "phoneme": "/u/",
+          "readablePhonetic": "oo",
+          "position": 2
+        },
+        {
+          "grapheme": "m",
+          "phoneme": "/m/",
+          "readablePhonetic": "muh",
+          "position": 3
+        },
+        {
+          "grapheme": "o",
+          "phoneme": "/oʊ/",
+          "readablePhonetic": "oh",
+          "position": 4
+        },
+        {
+          "grapheme": "n",
+          "phoneme": "/n/",
+          "readablePhonetic": "nuh",
+          "position": 5
+        },
+        {
+          "grapheme": "i",
+          "phoneme": "/i/",
+          "readablePhonetic": "ee",
+          "position": 6
+        },
+        {
+          "grapheme": "a",
+          "phoneme": "/ə/",
+          "readablePhonetic": "uh",
+          "position": 7
+        }
+      ]
+    },
+    {
+      "word": "tsunami",
+      "phoneticSpelling": "/tsuˈnɑmi/",
+      "letterSounds": [
+        {
+          "grapheme": "ts",
+          "phoneme": "/ts/",
+          "readablePhonetic": "tsuh",
+          "position": 0
+        },
+        {
+          "grapheme": "u",
+          "phoneme": "/u/",
+          "readablePhonetic": "oo",
+          "position": 1
+        },
+        {
+          "grapheme": "n",
+          "phoneme": "/n/",
+          "readablePhonetic": "nuh",
+          "position": 2
+        },
+        {
+          "grapheme": "a",
+          "phoneme": "/ɑ/",
+          "readablePhonetic": "ah",
+          "position": 3
+        },
+        {
+          "grapheme": "m",
+          "phoneme": "/m/",
+          "readablePhonetic": "muh",
+          "position": 4
+        },
+        {
+          "grapheme": "i",
+          "phoneme": "/i/",
+          "readablePhonetic": "ee",
+          "position": 5
+        }
+      ]
+    },
+    {
+      "word": "queue",
+      "phoneticSpelling": "/kju/",
+      "letterSounds": [
+        {
+          "grapheme": "qu",
+          "phoneme": "/k/",
+          "readablePhonetic": "kuh",
+          "position": 0
+        },
+        {
+          "grapheme": "ue",
+          "phoneme": "/ju/",
+          "readablePhonetic": "yoo",
+          "position": 1
+        },
+        {
+          "grapheme": "ue",
+          "phoneme": "",
+          "readablePhonetic": "",
+          "position": 2
+        },
+        {
+          "grapheme": "e",
+          "phoneme": "",
+          "readablePhonetic": "",
+          "position": 3
+        }
+      ]
+    },
+    {
+      "word": "phlegm",
+      "phoneticSpelling": "/flɛm/",
+      "letterSounds": [
+        {
+          "grapheme": "ph",
+          "phoneme": "/f/",
+          "readablePhonetic": "fuh",
+          "position": 0
+        },
+        {
+          "grapheme": "l",
+          "phoneme": "/l/",
+          "readablePhonetic": "luh",
+          "position": 1
+        },
+        {
+          "grapheme": "e",
+          "phoneme": "/ɛ/",
+          "readablePhonetic": "eh",
+          "position": 2
+        },
+        {
+          "grapheme": "g",
+          "phoneme": "/ɡ/",
+          "readablePhonetic": "guh",
+          "position": 3
+        },
+        {
+          "grapheme": "m",
+          "phoneme": "/m/",
+          "readablePhonetic": "muh",
+          "position": 4
+        }
+      ]
+    }
+  ]
+}
+

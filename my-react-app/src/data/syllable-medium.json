@@ -1,0 +1,185 @@
+{
+  "words": [
+    {
+      "word": "beautiful",
+      "phoneticSpelling": "/ˈbjuːtɪfəl/",
+      "syllables": [
+        {
+          "text": "beau",
+          "pronunciation": "byoo"
+        },
+        {
+          "text": "ti",
+          "pronunciation": "tih"
+        },
+        {
+          "text": "ful",
+          "pronunciation": "fuhl"
+        }
+      ]
+    },
+    {
+      "word": "function",
+      "phoneticSpelling": "/ˈfʌŋkʃən/",
+      "syllables": [
+        {
+          "text": "func",
+          "pronunciation": "fuhngk"
+        },
+        {
+          "text": "tion",
+          "pronunciation": "shuhn"
+        }
+      ]
+    },
+    {
+      "word": "amazing",
+      "phoneticSpelling": "/əˈmeɪzɪŋ/",
+      "syllables": [
+        {
+          "text": "a",
+          "pronunciation": "uh"
+        },
+        {
+          "text": "maz",
+          "pronunciation": "mayz"
+        },
+        {
+          "text": "ing",
+          "pronunciation": "ing"
+        }
+      ]
+    },
+    {
+      "word": "computer",
+      "phoneticSpelling": "/kəmˈpjutər/",
+      "syllables": [
+        {
+          "text": "com",
+          "pronunciation": "kuhm"
+        },
+        {
+          "text": "put",
+          "pronunciation": "pyoot"
+        },
+        {
+          "text": "er",
+          "pronunciation": "er"
+        }
+      ]
+    },
+    {
+      "word": "elephant",
+      "phoneticSpelling": "/ˈɛləfənt/",
+      "syllables": [
+        {
+          "text": "el",
+          "pronunciation": "el"
+        },
+        {
+          "text": "e",
+          "pronunciation": "uh"
+        },
+        {
+          "text": "phant",
+          "pronunciation": "fuhnt"
+        }
+      ]
+    },
+    {
+      "word": "important",
+      "phoneticSpelling": "/ɪmˈpɔrtənt/",
+      "syllables": [
+        {
+          "text": "im",
+          "pronunciation": "im"
+        },
+        {
+          "text": "por",
+          "pronunciation": "por"
+        },
+        {
+          "text": "tant",
+          "pronunciation": "tuhnt"
+        }
+      ]
+    },
+    {
+      "word": "butterfly",
+      "phoneticSpelling": "/ˈbʌtərflaɪ/",
+      "syllables": [
+        {
+          "text": "but",
+          "pronunciation": "buht"
+        },
+        {
+          "text": "ter",
+          "pronunciation": "ter"
+        },
+        {
+          "text": "fly",
+          "pronunciation": "fly"
+        }
+      ]
+    },
+    {
+      "word": "chocolate",
+      "phoneticSpelling": "/ˈtʃɔkəlɪt/",
+      "syllables": [
+        {
+          "text": "choc",
+          "pronunciation": "chok"
+        },
+        {
+          "text": "o",
+          "pronunciation": "uh"
+        },
+        {
+          "text": "late",
+          "pronunciation": "luht"
+        }
+      ]
+    },
+    {
+      "word": "adventure",
+      "phoneticSpelling": "/ədˈvɛntʃər/",
+      "syllables": [
+        {
+          "text": "ad",
+          "pronunciation": "uhd"
+        },
+        {
+          "text": "ven",
+          "pronunciation": "ven"
+        },
+        {
+          "text": "ture",
+          "pronunciation": "cher"
+        }
+      ]
+    },
+    {
+      "word": "education",
+      "phoneticSpelling": "/ˌɛdʒʊˈkeɪʃən/",
+      "syllables": [
+        {
+          "text": "ed",
+          "pronunciation": "ej"
+        },
+        {
+          "text": "u",
+          "pronunciation": "uh"
+        },
+        {
+          "text": "ca",
+          "pronunciation": "kay"
+        },
+        {
+          "text": "tion",
+          "pronunciation": "shuhn"
+        }
+      ]
+    }
+  ]
+}
+

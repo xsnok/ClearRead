@@ -1,0 +1,257 @@
+{
+  "words": [
+    {
+      "word": "psychology",
+      "phoneticSpelling": "/saɪˈkɑlədʒi/",
+      "syllables": [
+        {
+          "text": "psy",
+          "pronunciation": "sigh"
+        },
+        {
+          "text": "chol",
+          "pronunciation": "kol"
+        },
+        {
+          "text": "o",
+          "pronunciation": "uh"
+        },
+        {
+          "text": "gy",
+          "pronunciation": "jee"
+        }
+      ]
+    },
+    {
+      "word": "extraordinary",
+      "phoneticSpelling": "/ɪkˈstrɔrdəˌnɛri/",
+      "syllables": [
+        {
+          "text": "ex",
+          "pronunciation": "ik"
+        },
+        {
+          "text": "traor",
+          "pronunciation": "stror"
+        },
+        {
+          "text": "di",
+          "pronunciation": "duh"
+        },
+        {
+          "text": "nar",
+          "pronunciation": "ner"
+        },
+        {
+          "text": "y",
+          "pronunciation": "ee"
+        }
+      ]
+    },
+    {
+      "word": "responsibility",
+      "phoneticSpelling": "/rɪˌspɑnsəˈbɪlɪti/",
+      "syllables": [
+        {
+          "text": "re",
+          "pronunciation": "rih"
+        },
+        {
+          "text": "spon",
+          "pronunciation": "spon"
+        },
+        {
+          "text": "si",
+          "pronunciation": "suh"
+        },
+        {
+          "text": "bil",
+          "pronunciation": "bil"
+        },
+        {
+          "text": "i",
+          "pronunciation": "ih"
+        },
+        {
+          "text": "ty",
+          "pronunciation": "tee"
+        }
+      ]
+    },
+    {
+      "word": "university",
+      "phoneticSpelling": "/ˌjunəˈvɜrsɪti/",
+      "syllables": [
+        {
+          "text": "u",
+          "pronunciation": "yoo"
+        },
+        {
+          "text": "ni",
+          "pronunciation": "nuh"
+        },
+        {
+          "text": "ver",
+          "pronunciation": "ver"
+        },
+        {
+          "text": "si",
+          "pronunciation": "sih"
+        },
+        {
+          "text": "ty",
+          "pronunciation": "tee"
+        }
+      ]
+    },
+    {
+      "word": "philosophy",
+      "phoneticSpelling": "/fɪˈlɑsəfi/",
+      "syllables": [
+        {
+          "text": "phi",
+          "pronunciation": "fil"
+        },
+        {
+          "text": "los",
+          "pronunciation": "los"
+        },
+        {
+          "text": "o",
+          "pronunciation": "uh"
+        },
+        {
+          "text": "phy",
+          "pronunciation": "fee"
+        }
+      ]
+    },
+    {
+      "word": "characteristic",
+      "phoneticSpelling": "/ˌkærəktəˈrɪstɪk/",
+      "syllables": [
+        {
+          "text": "char",
+          "pronunciation": "kar"
+        },
+        {
+          "text": "ac",
+          "pronunciation": "uhk"
+        },
+        {
+          "text": "ter",
+          "pronunciation": "ter"
+        },
+        {
+          "text": "is",
+          "pronunciation": "ih"
+        },
+        {
+          "text": "tic",
+          "pronunciation": "stik"
+        }
+      ]
+    },
+    {
+      "word": "pronunciation",
+      "phoneticSpelling": "/prəˌnʌnsiˈeɪʃən/",
+      "syllables": [
+        {
+          "text": "pro",
+          "pronunciation": "pruh"
+        },
+        {
+          "text": "nun",
+          "pronunciation": "nuhn"
+        },
+        {
+          "text": "ci",
+          "pronunciation": "see"
+        },
+        {
+          "text": "a",
+          "pronunciation": "ay"
+        },
+        {
+          "text": "tion",
+          "pronunciation": "shuhn"
+        }
+      ]
+    },
+    {
+      "word": "environmental",
+      "phoneticSpelling": "/ɪnˌvaɪrənˈmɛntəl/",
+      "syllables": [
+        {
+          "text": "en",
+          "pronunciation": "in"
+        },
+        {
+          "text": "vi",
+          "pronunciation": "vy"
+        },
+        {
+          "text": "ron",
+          "pronunciation": "ruhn"
+        },
+        {
+          "text": "men",
+          "pronunciation": "men"
+        },
+        {
+          "text": "tal",
+          "pronunciation": "tuhl"
+        }
+      ]
+    },
+    {
+      "word": "communication",
+      "phoneticSpelling": "/kəˌmjunɪˈkeɪʃən/",
+      "syllables": [
+        {
+          "text": "com",
+          "pronunciation": "kuh"
+        },
+        {
+          "text": "mu",
+          "pronunciation": "myoo"
+        },
+        {
+          "text": "ni",
+          "pronunciation": "nih"
+        },
+        {
+          "text": "ca",
+          "pronunciation": "kay"
+        },
+        {
+          "text": "tion",
+          "pronunciation": "shuhn"
+        }
+      ]
+    },
+    {
+      "word": "understanding",
+      "phoneticSpelling": "/ˌʌndərˈstændɪŋ/",
+      "syllables": [
+        {
+          "text": "un",
+          "pronunciation": "uhn"
+        },
+        {
+          "text": "der",
+          "pronunciation": "der"
+        },
+        {
+          "text": "stand",
+          "pronunciation": "stand"
+        },
+        {
+          "text": "ing",
+          "pronunciation": "ing"
+        }
+      ]
+    }
+  ]
+}
+

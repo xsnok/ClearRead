@@ -1,0 +1,371 @@
+{
+  "words": [
+    {
+      "word": "beautiful",
+      "phoneticSpelling": "/ˈbjuːtɪfəl/",
+      "letterSounds": [
+        {
+          "grapheme": "b",
+          "phoneme": "/b/",
+          "readablePhonetic": "buh",
+          "position": 0
+        },
+        {
+          "grapheme": "eau",
+          "phoneme": "/juː/",
+          "readablePhonetic": "yoo",
+          "position": 1
+        },
+        {
+          "grapheme": "t",
+          "phoneme": "/t/",
+          "readablePhonetic": "tuh",
+          "position": 2
+        },
+        {
+          "grapheme": "i",
+          "phoneme": "/ɪ/",
+          "readablePhonetic": "ih",
+          "position": 3
+        },
+        {
+          "grapheme": "f",
+          "phoneme": "/f/",
+          "readablePhonetic": "fuh",
+          "position": 4
+        },
+        {
+          "grapheme": "u",
+          "phoneme": "/ə/",
+          "readablePhonetic": "uh",
+          "position": 5
+        },
+        {
+          "grapheme": "l",
+          "phoneme": "/l/",
+          "readablePhonetic": "luh",
+          "position": 6
+        }
+      ]
+    },
+    {
+      "word": "function",
+      "phoneticSpelling": "/ˈfʌŋkʃən/",
+      "letterSounds": [
+        {
+          "grapheme": "f",
+          "phoneme": "/f/",
+          "readablePhonetic": "fuh",
+          "position": 0
+        },
+        {
+          "grapheme": "u",
+          "phoneme": "/ʌ/",
+          "readablePhonetic": "uh",
+          "position": 1
+        },
+        {
+          "grapheme": "ng",
+          "phoneme": "/ŋ/",
+          "readablePhonetic": "nguh",
+          "position": 2
+        },
+        {
+          "grapheme": "c",
+          "phoneme": "/k/",
+          "readablePhonetic": "kuh",
+          "position": 3
+        },
+        {
+          "grapheme": "t",
+          "phoneme": "/t/",
+          "readablePhonetic": "tuh",
+          "position": 4
+        },
+        {
+          "grapheme": "i",
+          "phoneme": "/ɪ/",
+          "readablePhonetic": "ih",
+          "position": 5
+        },
+        {
+          "grapheme": "o",
+          "phoneme": "/ə/",
+          "readablePhonetic": "uh",
+          "position": 6
+        },
+        {
+          "grapheme": "n",
+          "phoneme": "/n/",
+          "readablePhonetic": "nuh",
+          "position": 7
+        }
+      ]
+    },
+    {
+      "word": "through",
+      "phoneticSpelling": "/θruː/",
+      "letterSounds": [
+        {
+          "grapheme": "th",
+          "phoneme": "/θ/",
+          "readablePhonetic": "thuh",
+          "position": 0
+        },
+        {
+          "grapheme": "r",
+          "phoneme": "/r/",
+          "readablePhonetic": "ruh",
+          "position": 1
+        },
+        {
+          "grapheme": "ough",
+          "phoneme": "/uː/",
+          "readablePhonetic": "oo",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "word": "knowledge",
+      "phoneticSpelling": "/ˈnɑlɪdʒ/",
+      "letterSounds": [
+        {
+          "grapheme": "k",
+          "phoneme": "",
+          "readablePhonetic": "",
+          "position": 0
+        },
+        {
+          "grapheme": "n",
+          "phoneme": "/n/",
+          "readablePhonetic": "nuh",
+          "position": 1
+        },
+        {
+          "grapheme": "o",
+          "phoneme": "/ɑ/",
+          "readablePhonetic": "ah",
+          "position": 2
+        },
+        {
+          "grapheme": "w",
+          "phoneme": "/w/",
+          "readablePhonetic": "wuh",
+          "position": 3
+        },
+        {
+          "grapheme": "l",
+          "phoneme": "/l/",
+          "readablePhonetic": "luh",
+          "position": 4
+        },
+        {
+          "grapheme": "e",
+          "phoneme": "/ɪ/",
+          "readablePhonetic": "ih",
+          "position": 5
+        },
+        {
+          "grapheme": "d",
+          "phoneme": "/d/",
+          "readablePhonetic": "duh",
+          "position": 6
+        },
+        {
+          "grapheme": "ge",
+          "phoneme": "/dʒ/",
+          "readablePhonetic": "juh",
+          "position": 7
+        }
+      ]
+    },
+    {
+      "word": "strength",
+      "phoneticSpelling": "/strɛŋθ/",
+      "letterSounds": [
+        {
+          "grapheme": "s",
+          "phoneme": "/s/",
+          "readablePhonetic": "suh",
+          "position": 0
+        },
+        {
+          "grapheme": "t",
+          "phoneme": "/t/",
+          "readablePhonetic": "tuh",
+          "position": 1
+        },
+        {
+          "grapheme": "r",
+          "phoneme": "/r/",
+          "readablePhonetic": "ruh",
+          "position": 2
+        },
+        {
+          "grapheme": "e",
+          "phoneme": "/ɛ/",
+          "readablePhonetic": "eh",
+          "position": 3
+        },
+        {
+          "grapheme": "ng",
+          "phoneme": "/ŋ/",
+          "readablePhonetic": "nguh",
+          "position": 4
+        },
+        {
+          "grapheme": "th",
+          "phoneme": "/θ/",
+          "readablePhonetic": "thuh",
+          "position": 5
+        }
+      ]
+    },
+    {
+      "word": "enough",
+      "phoneticSpelling": "/ɪˈnʌf/",
+      "letterSounds": [
+        {
+          "grapheme": "e",
+          "phoneme": "/ɪ/",
+          "readablePhonetic": "ih",
+          "position": 0
+        },
+        {
+          "grapheme": "n",
+          "phoneme": "/n/",
+          "readablePhonetic": "nuh",
+          "position": 1
+        },
+        {
+          "grapheme": "ou",
+          "phoneme": "/ʌ/",
+          "readablePhonetic": "uh",
+          "position": 2
+        },
+        {
+          "grapheme": "gh",
+          "phoneme": "/f/",
+          "readablePhonetic": "fuh",
+          "position": 3
+        }
+      ]
+    },
+    {
+      "word": "thought",
+      "phoneticSpelling": "/θɔt/",
+      "letterSounds": [
+        {
+          "grapheme": "th",
+          "phoneme": "/θ/",
+          "readablePhonetic": "thuh",
+          "position": 0
+        },
+        {
+          "grapheme": "ough",
+          "phoneme": "/ɔ/",
+          "readablePhonetic": "aw",
+          "position": 1
+        },
+        {
+          "grapheme": "t",
+          "phoneme": "/t/",
+          "readablePhonetic": "tuh",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "word": "phone",
+      "phoneticSpelling": "/foʊn/",
+      "letterSounds": [
+        {
+          "grapheme": "ph",
+          "phoneme": "/f/",
+          "readablePhonetic": "fuh",
+          "position": 0
+        },
+        {
+          "grapheme": "o",
+          "phoneme": "/oʊ/",
+          "readablePhonetic": "oh",
+          "position": 1
+        },
+        {
+          "grapheme": "n",
+          "phoneme": "/n/",
+          "readablePhonetic": "nuh",
+          "position": 2
+        },
+        {
+          "grapheme": "e",
+          "phoneme": "",
+          "readablePhonetic": "",
+          "position": 3
+        }
+      ]
+    },
+    {
+      "word": "whale",
+      "phoneticSpelling": "/weɪl/",
+      "letterSounds": [
+        {
+          "grapheme": "wh",
+          "phoneme": "/w/",
+          "readablePhonetic": "wuh",
+          "position": 0
+        },
+        {
+          "grapheme": "a",
+          "phoneme": "/eɪ/",
+          "readablePhonetic": "ay",
+          "position": 1
+        },
+        {
+          "grapheme": "l",
+          "phoneme": "/l/",
+          "readablePhonetic": "luh",
+          "position": 2
+        },
+        {
+          "grapheme": "e",
+          "phoneme": "",
+          "readablePhonetic": "",
+          "position": 3
+        }
+      ]
+    },
+    {
+      "word": "bridge",
+      "phoneticSpelling": "/brɪdʒ/",
+      "letterSounds": [
+        {
+          "grapheme": "b",
+          "phoneme": "/b/",
+          "readablePhonetic": "buh",
+          "position": 0
+        },
+        {
+          "grapheme": "r",
+          "phoneme": "/r/",
+          "readablePhonetic": "ruh",
+          "position": 1
+        },
+        {
+          "grapheme": "i",
+          "phoneme": "/ɪ/",
+          "readablePhonetic": "ih",
+          "position": 2
+        },
+        {
+          "grapheme": "dge",
+          "phoneme": "/dʒ/",
+          "readablePhonetic": "juh",
+          "position": 3
+        }
+      ]
+    }
+  ]
+}
+

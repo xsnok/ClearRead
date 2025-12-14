@@ -1,0 +1,133 @@
+{
+  "words": [
+    {
+      "word": "cat",
+      "phoneticSpelling": "/kæt/",
+      "syllables": [
+        {
+          "text": "cat",
+          "pronunciation": "kat"
+        }
+      ]
+    },
+    {
+      "word": "dog",
+      "phoneticSpelling": "/dɔɡ/",
+      "syllables": [
+        {
+          "text": "dog",
+          "pronunciation": "dawg"
+        }
+      ]
+    },
+    {
+      "word": "sun",
+      "phoneticSpelling": "/sʌn/",
+      "syllables": [
+        {
+          "text": "sun",
+          "pronunciation": "suhn"
+        }
+      ]
+    },
+    {
+      "word": "happy",
+      "phoneticSpelling": "/ˈhæpi/",
+      "syllables": [
+        {
+          "text": "hap",
+          "pronunciation": "hap"
+        },
+        {
+          "text": "py",
+          "pronunciation": "pee"
+        }
+      ]
+    },
+    {
+      "word": "water",
+      "phoneticSpelling": "/ˈwɔtər/",
+      "syllables": [
+        {
+          "text": "wa",
+          "pronunciation": "waw"
+        },
+        {
+          "text": "ter",
+          "pronunciation": "ter"
+        }
+      ]
+    },
+    {
+      "word": "table",
+      "phoneticSpelling": "/ˈteɪbəl/",
+      "syllables": [
+        {
+          "text": "ta",
+          "pronunciation": "tay"
+        },
+        {
+          "text": "ble",
+          "pronunciation": "buhl"
+        }
+      ]
+    },
+    {
+      "word": "music",
+      "phoneticSpelling": "/ˈmjuzɪk/",
+      "syllables": [
+        {
+          "text": "mu",
+          "pronunciation": "myoo"
+        },
+        {
+          "text": "sic",
+          "pronunciation": "zik"
+        }
+      ]
+    },
+    {
+      "word": "paper",
+      "phoneticSpelling": "/ˈpeɪpər/",
+      "syllables": [
+        {
+          "text": "pa",
+          "pronunciation": "pay"
+        },
+        {
+          "text": "per",
+          "pronunciation": "per"
+        }
+      ]
+    },
+    {
+      "word": "window",
+      "phoneticSpelling": "/ˈwɪndoʊ/",
+      "syllables": [
+        {
+          "text": "win",
+          "pronunciation": "win"
+        },
+        {
+          "text": "dow",
+          "pronunciation": "doh"
+        }
+      ]
+    },
+    {
+      "word": "garden",
+      "phoneticSpelling": "/ˈɡɑrdən/",
+      "syllables": [
+        {
+          "text": "gar",
+          "pronunciation": "gar"
+        },
+        {
+          "text": "den",
+          "pronunciation": "den"
+        }
+      ]
+    }
+  ]
+}
+

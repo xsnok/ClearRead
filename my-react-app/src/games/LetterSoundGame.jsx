@@ -1,13 +1,19 @@
 import { useState } from "react";
 import callGemini from "../ai.js";
 import { speakText } from "../utils/speech.js";
+import easyWords from "../data/easy.json";
+import mediumWords from "../data/medium.json";
+import hardWords from "../data/hard.json";
 
 // Sound tile component - just a speaker icon
 function SoundTile({ sound, index, isMatched, isSelected, onClick, onSpeak }) {
   const handleClick = (e) => {
     e.stopPropagation();
     // Play sound when clicked - use readablePhonetic which sounds like it does in the word
-    const textToSpeak = sound.readablePhonetic || sound.grapheme || sound.phoneme.replace(/[\/\[\]]/g, "");
+    const textToSpeak =
+      sound.readablePhonetic ||
+      sound.grapheme ||
+      sound.phoneme.replace(/[\/\[\]]/g, "");
     onSpeak(textToSpeak);
     onClick(index);
   };
@@ -172,14 +178,15 @@ export default function LetterSoundGame({ onBack }) {
   const [error, setError] = useState("");
   const [gameStarted, setGameStarted] = useState(false);
   const [allCorrect, setAllCorrect] = useState(false);
+  const [selectedDifficulty, setSelectedDifficulty] = useState(null);
+  const [showCustomInput, setShowCustomInput] = useState(false);
 
   const letterSoundSchema = {
     type: "object",
     properties: {
       words: {
         type: "array",
-        description:
-          "Array of word objects with their letter-sound breakdowns",
+        description: "Array of word objects with their letter-sound breakdowns",
         items: {
           type: "object",
           properties: {
@@ -216,10 +223,16 @@ export default function LetterSoundGame({ onBack }) {
                   },
                   position: {
                     type: "number",
-                    description: "The position of this grapheme in the word (0-indexed)",
+                    description:
+                      "The position of this grapheme in the word (0-indexed)",
                   },
                 },
-                required: ["grapheme", "phoneme", "readablePhonetic", "position"],
+                required: [
+                  "grapheme",
+                  "phoneme",
+                  "readablePhonetic",
+                  "position",
+                ],
               },
             },
           },
@@ -293,31 +306,66 @@ Return a JSON object with an array of word objects, where each object contains:
     }
   };
 
-  const handleStartGame = async () => {
-    if (!wordsInput.trim()) {
-      setError("Please enter at least one word");
-      return;
-    }
-
+  const handleStartGame = async (difficulty = null) => {
     setLoading(true);
     setError("");
     setMatchedPairs([]);
     setSelectedSoundIndex(null);
     setSelectedLetterIndex(null);
     setAllCorrect(false);
+    setSelectedDifficulty(difficulty);
 
     try {
-      const wordsList = wordsInput
-        .split(/[,\n]/)
-        .map((w) => w.trim())
-        .filter((w) => w.length > 0);
+      let processedWords = [];
 
-      if (wordsList.length === 0) {
-        setError("Please enter at least one word");
-        return;
+      if (difficulty) {
+        // Load from JSON file
+        let wordData;
+        switch (difficulty) {
+          case "easy":
+            wordData = easyWords;
+            break;
+          case "medium":
+            wordData = mediumWords;
+            break;
+          case "hard":
+            wordData = hardWords;
+            break;
+          default:
+            throw new Error("Invalid difficulty level");
+        }
+
+        processedWords = wordData.words.map((item) => ({
+          word: item.word.trim(),
+          phoneticSpelling: item.phoneticSpelling || item.word.trim(),
+          letterSounds: item.letterSounds.map((ls) => ({
+            grapheme: ls.grapheme,
+            phoneme: ls.phoneme,
+            readablePhonetic: ls.readablePhonetic || ls.grapheme,
+            position: ls.position,
+          })),
+        }));
+      } else {
+        // Custom input - process with Gemini
+        if (!wordsInput.trim()) {
+          setError("Please enter at least one word");
+          setLoading(false);
+          return;
+        }
+
+        const wordsList = wordsInput
+          .split(/[,\n]/)
+          .map((w) => w.trim())
+          .filter((w) => w.length > 0);
+
+        if (wordsList.length === 0) {
+          setError("Please enter at least one word");
+          setLoading(false);
+          return;
+        }
+
+        processedWords = await processMultipleWords(wordsList);
       }
-
-      const processedWords = await processMultipleWords(wordsList);
 
       if (processedWords.length === 0) {
         throw new Error("No words were successfully processed");
@@ -389,7 +437,9 @@ Return a JSON object with an array of word objects, where each object contains:
       setMatchedPairs([...matchedPairs, newPair]);
 
       // Remove from available arrays
-      const newSounds = availableSounds.filter((_, i) => i !== selectedSoundIndex);
+      const newSounds = availableSounds.filter(
+        (_, i) => i !== selectedSoundIndex
+      );
       const newLetters = availableLetters.filter((_, i) => i !== index);
 
       setAvailableSounds(newSounds);
@@ -441,6 +491,8 @@ Return a JSON object with an array of word objects, where each object contains:
       setAvailableSounds([]);
       setAvailableLetters([]);
       setAllCorrect(false);
+      setSelectedDifficulty(null);
+      setShowCustomInput(false);
     }
   };
 
@@ -458,8 +510,8 @@ Return a JSON object with an array of word objects, where each object contains:
                 Letter-Sound Match
               </h1>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Enter words, then match sounds to letters and letter combinations!
-                Click a sound, then click the matching letter.
+                Enter words, then match sounds to letters and letter
+                combinations! Click a sound, then click the matching letter.
               </p>
             </div>
 
@@ -473,49 +525,121 @@ Return a JSON object with an array of word objects, where each object contains:
               </button>
             )}
 
-            {/* Input Section */}
-            <div className="space-y-4 mb-6">
-              <textarea
-                value={wordsInput}
-                onChange={(e) => setWordsInput(e.target.value)}
-                placeholder="Enter words separated by commas or new lines...&#10;Example: ship, chat, thing"
-                className="w-full px-6 py-4 text-lg border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[120px] resize-none"
-                disabled={loading}
-              />
-              <button
-                onClick={handleStartGame}
-                disabled={loading || !wordsInput.trim()}
-                className="w-full px-8 py-4 bg-linear-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-lg"
-              >
-                {loading ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <svg
-                      className="animate-spin h-5 w-5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    Processing words...
-                  </span>
-                ) : (
-                  "Start Game"
-                )}
-              </button>
+            {/* Practice Mode Selection */}
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-gray-700 mb-4 text-center">
+                Choose Practice Mode:
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <button
+                  onClick={() => {
+                    setShowCustomInput(false);
+                    handleStartGame("easy");
+                  }}
+                  disabled={loading}
+                  className="px-6 py-4 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                >
+                  <div className="text-2xl mb-2">🟢</div>
+                  <div className="font-bold text-lg">Practice Easy</div>
+                  <div className="text-sm opacity-90">
+                    Simple 3-4 letter words
+                  </div>
+                </button>
+                <button
+                  onClick={() => {
+                    setShowCustomInput(false);
+                    handleStartGame("medium");
+                  }}
+                  disabled={loading}
+                  className="px-6 py-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                >
+                  <div className="text-2xl mb-2">🟡</div>
+                  <div className="font-bold text-lg">Practice Medium</div>
+                  <div className="text-sm opacity-90">
+                    Complex letter combinations
+                  </div>
+                </button>
+                <button
+                  onClick={() => {
+                    setShowCustomInput(false);
+                    handleStartGame("hard");
+                  }}
+                  disabled={loading}
+                  className="px-6 py-4 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                >
+                  <div className="text-2xl mb-2">🔴</div>
+                  <div className="font-bold text-lg">Practice Hard</div>
+                  <div className="text-sm opacity-90">
+                    Tricky irregular words
+                  </div>
+                </button>
+                <button
+                  onClick={() => {
+                    setShowCustomInput(!showCustomInput);
+                    setSelectedDifficulty(null);
+                  }}
+                  disabled={loading}
+                  className={`px-6 py-4 font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${
+                    showCustomInput
+                      ? "bg-blue-600 hover:bg-blue-700 text-white border-2 border-blue-800"
+                      : "bg-blue-500 hover:bg-blue-600 text-white"
+                  }`}
+                >
+                  <div className="text-2xl mb-2">✏️</div>
+                  <div className="font-bold text-lg">Input Your Own</div>
+                  <div className="text-sm opacity-90">Enter custom words</div>
+                </button>
+              </div>
             </div>
+
+            {/* Custom Input Section - Show when "Input your own" is selected */}
+            {showCustomInput && (
+              <div className="space-y-4 mb-6 p-6 bg-blue-50 rounded-xl border-2 border-blue-200">
+                <h3 className="text-xl font-semibold text-gray-700 text-center">
+                  Enter Your Own Words:
+                </h3>
+                <textarea
+                  value={wordsInput}
+                  onChange={(e) => setWordsInput(e.target.value)}
+                  placeholder="Enter words separated by commas or new lines...&#10;Example: ship, chat, thing"
+                  className="w-full px-6 py-4 text-lg border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[120px] resize-none"
+                  disabled={loading}
+                />
+                <button
+                  onClick={() => handleStartGame(null)}
+                  disabled={loading || !wordsInput.trim()}
+                  className="w-full px-8 py-4 bg-linear-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-lg"
+                >
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <svg
+                        className="animate-spin h-5 w-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Processing words...
+                    </span>
+                  ) : (
+                    "Start Game"
+                  )}
+                </button>
+              </div>
+            )}
 
             {/* Error Message */}
             {error && (
@@ -545,9 +669,25 @@ Return a JSON object with an array of word objects, where each object contains:
       {/* Progress Bar */}
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-lg font-semibold text-gray-700">
-            Word {currentWordIndex + 1} of {words.length}
-          </span>
+          <div className="flex items-center gap-3">
+            <span className="text-lg font-semibold text-gray-700">
+              Word {currentWordIndex + 1} of {words.length}
+            </span>
+            {selectedDifficulty && (
+              <span
+                className={`px-3 py-1 rounded-full text-sm font-semibold text-white ${
+                  selectedDifficulty === "easy"
+                    ? "bg-green-500"
+                    : selectedDifficulty === "medium"
+                    ? "bg-yellow-500"
+                    : "bg-red-500"
+                }`}
+              >
+                {selectedDifficulty.charAt(0).toUpperCase() +
+                  selectedDifficulty.slice(1)}
+              </span>
+            )}
+          </div>
           <div className="flex-1 mx-4 h-2 bg-gray-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-linear-to-r from-blue-600 to-cyan-600 transition-all duration-300"
@@ -686,4 +826,3 @@ Return a JSON object with an array of word objects, where each object contains:
     </div>
   );
 }
-

@@ -1,0 +1,245 @@
+{
+  "words": [
+    {
+      "word": "cat",
+      "phoneticSpelling": "/kæt/",
+      "letterSounds": [
+        {
+          "grapheme": "c",
+          "phoneme": "/k/",
+          "readablePhonetic": "kuh",
+          "position": 0
+        },
+        {
+          "grapheme": "a",
+          "phoneme": "/æ/",
+          "readablePhonetic": "ah",
+          "position": 1
+        },
+        {
+          "grapheme": "t",
+          "phoneme": "/t/",
+          "readablePhonetic": "tuh",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "word": "dog",
+      "phoneticSpelling": "/dɔɡ/",
+      "letterSounds": [
+        {
+          "grapheme": "d",
+          "phoneme": "/d/",
+          "readablePhonetic": "duh",
+          "position": 0
+        },
+        {
+          "grapheme": "o",
+          "phoneme": "/ɔ/",
+          "readablePhonetic": "aw",
+          "position": 1
+        },
+        {
+          "grapheme": "g",
+          "phoneme": "/ɡ/",
+          "readablePhonetic": "guh",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "word": "sun",
+      "phoneticSpelling": "/sʌn/",
+      "letterSounds": [
+        {
+          "grapheme": "s",
+          "phoneme": "/s/",
+          "readablePhonetic": "suh",
+          "position": 0
+        },
+        {
+          "grapheme": "u",
+          "phoneme": "/ʌ/",
+          "readablePhonetic": "uh",
+          "position": 1
+        },
+        {
+          "grapheme": "n",
+          "phoneme": "/n/",
+          "readablePhonetic": "nuh",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "word": "hat",
+      "phoneticSpelling": "/hæt/",
+      "letterSounds": [
+        {
+          "grapheme": "h",
+          "phoneme": "/h/",
+          "readablePhonetic": "huh",
+          "position": 0
+        },
+        {
+          "grapheme": "a",
+          "phoneme": "/æ/",
+          "readablePhonetic": "ah",
+          "position": 1
+        },
+        {
+          "grapheme": "t",
+          "phoneme": "/t/",
+          "readablePhonetic": "tuh",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "word": "bed",
+      "phoneticSpelling": "/bɛd/",
+      "letterSounds": [
+        {
+          "grapheme": "b",
+          "phoneme": "/b/",
+          "readablePhonetic": "buh",
+          "position": 0
+        },
+        {
+          "grapheme": "e",
+          "phoneme": "/ɛ/",
+          "readablePhonetic": "eh",
+          "position": 1
+        },
+        {
+          "grapheme": "d",
+          "phoneme": "/d/",
+          "readablePhonetic": "duh",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "word": "fish",
+      "phoneticSpelling": "/fɪʃ/",
+      "letterSounds": [
+        {
+          "grapheme": "f",
+          "phoneme": "/f/",
+          "readablePhonetic": "fuh",
+          "position": 0
+        },
+        {
+          "grapheme": "i",
+          "phoneme": "/ɪ/",
+          "readablePhonetic": "ih",
+          "position": 1
+        },
+        {
+          "grapheme": "sh",
+          "phoneme": "/ʃ/",
+          "readablePhonetic": "shuh",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "word": "ship",
+      "phoneticSpelling": "/ʃɪp/",
+      "letterSounds": [
+        {
+          "grapheme": "sh",
+          "phoneme": "/ʃ/",
+          "readablePhonetic": "shuh",
+          "position": 0
+        },
+        {
+          "grapheme": "i",
+          "phoneme": "/ɪ/",
+          "readablePhonetic": "ih",
+          "position": 1
+        },
+        {
+          "grapheme": "p",
+          "phoneme": "/p/",
+          "readablePhonetic": "puh",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "word": "chat",
+      "phoneticSpelling": "/tʃæt/",
+      "letterSounds": [
+        {
+          "grapheme": "ch",
+          "phoneme": "/tʃ/",
+          "readablePhonetic": "chuh",
+          "position": 0
+        },
+        {
+          "grapheme": "a",
+          "phoneme": "/æ/",
+          "readablePhonetic": "ah",
+          "position": 1
+        },
+        {
+          "grapheme": "t",
+          "phoneme": "/t/",
+          "readablePhonetic": "tuh",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "word": "this",
+      "phoneticSpelling": "/ðɪs/",
+      "letterSounds": [
+        {
+          "grapheme": "th",
+          "phoneme": "/ð/",
+          "readablePhonetic": "thuh",
+          "position": 0
+        },
+        {
+          "grapheme": "i",
+          "phoneme": "/ɪ/",
+          "readablePhonetic": "ih",
+          "position": 1
+        },
+        {
+          "grapheme": "s",
+          "phoneme": "/s/",
+          "readablePhonetic": "suh",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "word": "quack",
+      "phoneticSpelling": "/kwæk/",
+      "letterSounds": [
+        {
+          "grapheme": "qu",
+          "phoneme": "/kw/",
+          "readablePhonetic": "kwuh",
+          "position": 0
+        },
+        {
+          "grapheme": "a",
+          "phoneme": "/æ/",
+          "readablePhonetic": "ah",
+          "position": 1
+        },
+        {
+          "grapheme": "ck",
+          "phoneme": "/k/",
+          "readablePhonetic": "kuh",
+          "position": 2
+        }
+      ]
+    }
+  ]
+}
+

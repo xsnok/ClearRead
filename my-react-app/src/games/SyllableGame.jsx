@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import callGemini from "../ai.js";
 import { speakText } from "../utils/speech.js";
+import easySyllableWords from "../data/syllable-easy.json";
+import mediumSyllableWords from "../data/syllable-medium.json";
+import hardSyllableWords from "../data/syllable-hard.json";
 
 // Draggable syllable component
 function DraggableSyllable({ syllable, index, isUsed, onSpeak }) {
@@ -193,6 +196,8 @@ export default function SyllableGame({ onBack }) {
   const [error, setError] = useState("");
   const [isCorrect, setIsCorrect] = useState(null);
   const [gameStarted, setGameStarted] = useState(false);
+  const [selectedDifficulty, setSelectedDifficulty] = useState(null);
+  const [showCustomInput, setShowCustomInput] = useState(false);
 
   const multipleWordsSchema = {
     type: "object",
@@ -297,31 +302,62 @@ Return a JSON object with an array of word objects, where each object contains:
     }
   };
 
-  const handleStartGame = async () => {
-    if (!wordsInput.trim()) {
-      setError("Please enter at least one word");
-      return;
-    }
-
+  const handleStartGame = async (difficulty = null) => {
     setLoading(true);
     setError("");
     setIsCorrect(null);
     setSelectedOrder([]);
+    setSelectedDifficulty(difficulty);
 
     try {
-      // Split by comma or newline, filter empty strings
-      const wordsList = wordsInput
-        .split(/[,\n]/)
-        .map((w) => w.trim())
-        .filter((w) => w.length > 0);
+      let processedWords = [];
 
-      if (wordsList.length === 0) {
-        setError("Please enter at least one word");
-        return;
+      if (difficulty) {
+        // Load from JSON file
+        let wordData;
+        switch (difficulty) {
+          case "easy":
+            wordData = easySyllableWords;
+            break;
+          case "medium":
+            wordData = mediumSyllableWords;
+            break;
+          case "hard":
+            wordData = hardSyllableWords;
+            break;
+          default:
+            throw new Error("Invalid difficulty level");
+        }
+
+        processedWords = wordData.words.map((item) => ({
+          word: item.word.trim(),
+          phoneticSpelling: item.phoneticSpelling || item.word.trim(),
+          syllables: item.syllables.map((syllable) => ({
+            text: syllable.text,
+            pronunciation: syllable.pronunciation,
+          })),
+        }));
+      } else {
+        // Custom input - process with Gemini
+        if (!wordsInput.trim()) {
+          setError("Please enter at least one word");
+          setLoading(false);
+          return;
+        }
+
+        const wordsList = wordsInput
+          .split(/[,\n]/)
+          .map((w) => w.trim())
+          .filter((w) => w.length > 0);
+
+        if (wordsList.length === 0) {
+          setError("Please enter at least one word");
+          setLoading(false);
+          return;
+        }
+
+        processedWords = await processMultipleWords(wordsList);
       }
-
-      // Process all words
-      const processedWords = await processMultipleWords(wordsList);
 
       if (processedWords.length === 0) {
         throw new Error("No words were successfully processed");
@@ -411,6 +447,8 @@ Return a JSON object with an array of word objects, where each object contains:
       setCurrentQuestionIndex(0);
       setSelectedOrder([]);
       setIsCorrect(null);
+      setSelectedDifficulty(null);
+      setShowCustomInput(false);
     }
   };
 
@@ -443,49 +481,123 @@ Return a JSON object with an array of word objects, where each object contains:
               </button>
             )}
 
-            {/* Input Section */}
-            <div className="space-y-4 mb-6">
-              <textarea
-                value={wordsInput}
-                onChange={(e) => setWordsInput(e.target.value)}
-                placeholder="Enter words separated by commas or new lines...&#10;Example: Functional, Beautiful, Amazing"
-                className="w-full px-6 py-4 text-lg border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[120px] resize-none"
-                disabled={loading}
-              />
-              <button
-                onClick={handleStartGame}
-                disabled={loading || !wordsInput.trim()}
-                className="w-full px-8 py-4 bg-linear-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-lg"
-              >
-                {loading ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <svg
-                      className="animate-spin h-5 w-5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    Processing words...
-                  </span>
-                ) : (
-                  "Start Game"
-                )}
-              </button>
+            {/* Practice Mode Selection */}
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-gray-700 mb-4 text-center">
+                Choose Practice Mode:
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <button
+                  onClick={() => {
+                    setShowCustomInput(false);
+                    handleStartGame("easy");
+                  }}
+                  disabled={loading}
+                  className="px-6 py-4 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                >
+                  <div className="text-2xl mb-2">🟢</div>
+                  <div className="font-bold text-lg">Practice Easy</div>
+                  <div className="text-sm opacity-90">
+                    Simple 1-2 syllable words
+                  </div>
+                </button>
+                <button
+                  onClick={() => {
+                    setShowCustomInput(false);
+                    handleStartGame("medium");
+                  }}
+                  disabled={loading}
+                  className="px-6 py-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                >
+                  <div className="text-2xl mb-2">🟡</div>
+                  <div className="font-bold text-lg">Practice Medium</div>
+                  <div className="text-sm opacity-90">
+                    2-4 syllable words
+                  </div>
+                </button>
+                <button
+                  onClick={() => {
+                    setShowCustomInput(false);
+                    handleStartGame("hard");
+                  }}
+                  disabled={loading}
+                  className="px-6 py-4 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                >
+                  <div className="text-2xl mb-2">🔴</div>
+                  <div className="font-bold text-lg">Practice Hard</div>
+                  <div className="text-sm opacity-90">
+                    Complex multi-syllable words
+                  </div>
+                </button>
+                <button
+                  onClick={() => {
+                    setShowCustomInput(!showCustomInput);
+                    setSelectedDifficulty(null);
+                  }}
+                  disabled={loading}
+                  className={`px-6 py-4 font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${
+                    showCustomInput
+                      ? "bg-indigo-600 hover:bg-indigo-700 text-white border-2 border-indigo-800"
+                      : "bg-indigo-500 hover:bg-indigo-600 text-white"
+                  }`}
+                >
+                  <div className="text-2xl mb-2">✏️</div>
+                  <div className="font-bold text-lg">Input Your Own</div>
+                  <div className="text-sm opacity-90">
+                    Enter custom words
+                  </div>
+                </button>
+              </div>
             </div>
+
+            {/* Custom Input Section - Show when "Input your own" is selected */}
+            {showCustomInput && (
+              <div className="space-y-4 mb-6 p-6 bg-indigo-50 rounded-xl border-2 border-indigo-200">
+                <h3 className="text-xl font-semibold text-gray-700 text-center">
+                  Enter Your Own Words:
+                </h3>
+                <textarea
+                  value={wordsInput}
+                  onChange={(e) => setWordsInput(e.target.value)}
+                  placeholder="Enter words separated by commas or new lines...&#10;Example: Functional, Beautiful, Amazing"
+                  className="w-full px-6 py-4 text-lg border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[120px] resize-none"
+                  disabled={loading}
+                />
+                <button
+                  onClick={() => handleStartGame(null)}
+                  disabled={loading || !wordsInput.trim()}
+                  className="w-full px-8 py-4 bg-linear-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-lg"
+                >
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <svg
+                        className="animate-spin h-5 w-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Processing words...
+                    </span>
+                  ) : (
+                    "Start Game"
+                  )}
+                </button>
+              </div>
+            )}
 
             {/* Error Message */}
             {error && (
@@ -515,9 +627,25 @@ Return a JSON object with an array of word objects, where each object contains:
       {/* Progress Bar */}
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-lg font-semibold text-gray-700">
-            Question {currentQuestionIndex + 1} of {words.length}
-          </span>
+          <div className="flex items-center gap-3">
+            <span className="text-lg font-semibold text-gray-700">
+              Question {currentQuestionIndex + 1} of {words.length}
+            </span>
+            {selectedDifficulty && (
+              <span
+                className={`px-3 py-1 rounded-full text-sm font-semibold text-white ${
+                  selectedDifficulty === "easy"
+                    ? "bg-green-500"
+                    : selectedDifficulty === "medium"
+                    ? "bg-yellow-500"
+                    : "bg-red-500"
+                }`}
+              >
+                {selectedDifficulty.charAt(0).toUpperCase() +
+                  selectedDifficulty.slice(1)}
+              </span>
+            )}
+          </div>
           <div className="flex-1 mx-4 h-2 bg-gray-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-linear-to-r from-indigo-600 to-purple-600 transition-all duration-300"
