@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import callGemini from "../ai.js";
 import { speakText } from "../utils/speech.js";
+import { recordSession } from "../utils/stats.js";
 import easyWords from "../data/easy.json";
 import mediumWords from "../data/medium.json";
 import hardWords from "../data/hard.json";
@@ -180,6 +181,8 @@ export default function LetterSoundGame({ onBack }) {
   const [allCorrect, setAllCorrect] = useState(false);
   const [selectedDifficulty, setSelectedDifficulty] = useState(null);
   const [showCustomInput, setShowCustomInput] = useState(false);
+  const gameStartTime = useRef(null);
+  const wordResults = useRef([]); // Track correct/incorrect for each word
 
   const letterSoundSchema = {
     type: "object",
@@ -375,6 +378,9 @@ Return a JSON object with an array of word objects, where each object contains:
       setCurrentWordIndex(0);
       initializeGame(processedWords[0]);
       setGameStarted(true);
+      // Initialize tracking
+      gameStartTime.current = Date.now();
+      wordResults.current = processedWords.map(() => false); // Initialize all as incorrect
     } catch (err) {
       setError(err.message || "Failed to process words");
     } finally {
@@ -474,6 +480,8 @@ Return a JSON object with an array of word objects, where each object contains:
       // All matched - check if all are correct
       const allPairsCorrect = allPairs.every((pair) => pair.isCorrect);
       setAllCorrect(allPairsCorrect);
+      // Update word result
+      wordResults.current[currentWordIndex] = allPairsCorrect;
     }
   };
 
@@ -482,8 +490,25 @@ Return a JSON object with an array of word objects, where each object contains:
       const nextIndex = currentWordIndex + 1;
       setCurrentWordIndex(nextIndex);
       initializeGame(words[nextIndex]);
+      setAllCorrect(false); // Reset for next word
     } else {
-      // Game complete
+      // Game complete - save stats
+      const timeSpent = gameStartTime.current
+        ? Math.round((Date.now() - gameStartTime.current) / 1000)
+        : 0;
+      const wordsCorrect = wordResults.current.filter((r) => r).length;
+      const wordsCompleted = wordResults.current.length;
+
+      // Record session stats
+      recordSession({
+        gameType: "lettersound",
+        difficulty: selectedDifficulty,
+        wordsCompleted,
+        wordsCorrect,
+        timeSpent,
+        words: words.map((w) => w.word),
+      });
+
       setGameStarted(false);
       setWords([]);
       setCurrentWordIndex(0);
@@ -493,6 +518,8 @@ Return a JSON object with an array of word objects, where each object contains:
       setAllCorrect(false);
       setSelectedDifficulty(null);
       setShowCustomInput(false);
+      gameStartTime.current = null;
+      wordResults.current = [];
     }
   };
 

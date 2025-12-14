@@ -33,7 +33,7 @@ export default function GameSelector({ onSelectGame }) {
         </div>
 
         {/* Games Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {games.map((game) => (
             <button
               key={game.id}
@@ -52,6 +52,25 @@ export default function GameSelector({ onSelectGame }) {
               </div>
             </button>
           ))}
+        </div>
+
+        {/* Dashboard Button */}
+        <div className="flex justify-center">
+          <button
+            onClick={() => onSelectGame("dashboard")}
+            className="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transform hover:scale-105 transition-all text-center group max-w-md w-full"
+          >
+            <div className="text-5xl mb-4">📊</div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-3">
+              Progress Dashboard
+            </h2>
+            <p className="text-gray-600 mb-6">
+              View your scores, track improvement, and see where you can practice more
+            </p>
+            <div className="inline-block px-6 py-3 bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg group-hover:shadow-lg transition-all">
+              View Dashboard →
+            </div>
+          </button>
         </div>
 
         {/* Coming Soon Placeholder */}

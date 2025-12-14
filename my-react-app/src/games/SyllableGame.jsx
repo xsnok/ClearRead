@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import callGemini from "../ai.js";
 import { speakText } from "../utils/speech.js";
+import { recordSession } from "../utils/stats.js";
 import easySyllableWords from "../data/syllable-easy.json";
 import mediumSyllableWords from "../data/syllable-medium.json";
 import hardSyllableWords from "../data/syllable-hard.json";
@@ -198,6 +199,8 @@ export default function SyllableGame({ onBack }) {
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedDifficulty, setSelectedDifficulty] = useState(null);
   const [showCustomInput, setShowCustomInput] = useState(false);
+  const gameStartTime = useRef(null);
+  const wordResults = useRef([]); // Track correct/incorrect for each word
 
   const multipleWordsSchema = {
     type: "object",
@@ -367,6 +370,9 @@ Return a JSON object with an array of word objects, where each object contains:
       setCurrentQuestionIndex(0);
       setScrambledSyllables(scrambleArray(processedWords[0].syllables));
       setGameStarted(true);
+      // Initialize tracking
+      gameStartTime.current = Date.now();
+      wordResults.current = processedWords.map(() => false); // Initialize all as incorrect
     } catch (err) {
       setError(err.message || "Failed to process words");
     } finally {
@@ -430,7 +436,10 @@ Return a JSON object with an array of word objects, where each object contains:
       .map((syllable) => syllable.text || syllable)
       .join("");
 
-    setIsCorrect(userAnswer === correctAnswer);
+    const isCorrect = userAnswer === correctAnswer;
+    setIsCorrect(isCorrect);
+    // Update word result
+    wordResults.current[currentQuestionIndex] = isCorrect;
   };
 
   const handleNext = () => {
@@ -441,7 +450,23 @@ Return a JSON object with an array of word objects, where each object contains:
       setSelectedOrder([]);
       setIsCorrect(null);
     } else {
-      // Game complete - return to input screen
+      // Game complete - save stats and return to input screen
+      const timeSpent = gameStartTime.current
+        ? Math.round((Date.now() - gameStartTime.current) / 1000)
+        : 0;
+      const wordsCorrect = wordResults.current.filter((r) => r).length;
+      const wordsCompleted = wordResults.current.length;
+
+      // Record session stats
+      recordSession({
+        gameType: "syllable",
+        difficulty: selectedDifficulty,
+        wordsCompleted,
+        wordsCorrect,
+        timeSpent,
+        words: words.map((w) => w.word),
+      });
+
       setGameStarted(false);
       setWords([]);
       setCurrentQuestionIndex(0);
@@ -449,6 +474,8 @@ Return a JSON object with an array of word objects, where each object contains:
       setIsCorrect(null);
       setSelectedDifficulty(null);
       setShowCustomInput(false);
+      gameStartTime.current = null;
+      wordResults.current = [];
     }
   };
 
