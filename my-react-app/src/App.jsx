@@ -3,6 +3,8 @@ import GameSelector from "./games/GameSelector.jsx";
 import SyllableGame from "./games/SyllableGame.jsx";
 import LetterSoundGame from "./games/LetterSoundGame.jsx";
 import Dashboard from "./games/Dashboard.jsx";
+import PageTransition from "./components/PageTransition.jsx";
+import GradientBackground from "./components/GradientBackground.jsx";
 
 function App() {
   const [currentGame, setCurrentGame] = useState(null);
@@ -17,20 +19,38 @@ function App() {
 
   // Render game selector or selected game
   if (currentGame === null) {
-    return <GameSelector onSelectGame={handleSelectGame} />;
+    return (
+      <>
+        <GradientBackground />
+        <PageTransition key="selector">
+          <GameSelector onSelectGame={handleSelectGame} />
+        </PageTransition>
+      </>
+    );
   }
 
   // Route to specific games
+  let gameComponent;
   switch (currentGame) {
     case "syllable":
-      return <SyllableGame onBack={handleBack} />;
+      gameComponent = <SyllableGame onBack={handleBack} />;
+      break;
     case "lettersound":
-      return <LetterSoundGame onBack={handleBack} />;
+      gameComponent = <LetterSoundGame onBack={handleBack} />;
+      break;
     case "dashboard":
-      return <Dashboard onBack={handleBack} />;
+      gameComponent = <Dashboard onBack={handleBack} />;
+      break;
     default:
-      return <GameSelector onSelectGame={handleSelectGame} />;
+      gameComponent = <GameSelector onSelectGame={handleSelectGame} />;
   }
+
+  return (
+    <>
+      <GradientBackground />
+      <PageTransition key={currentGame}>{gameComponent}</PageTransition>
+    </>
+  );
 }
 
 export default App;

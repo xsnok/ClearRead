@@ -1,13 +1,22 @@
 import { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useSpring, animated } from "@react-spring/web";
 import callGemini from "../ai.js";
 import { speakText } from "../utils/speech.js";
 import { recordSession } from "../utils/stats.js";
 import easyWords from "../data/easy.json";
 import mediumWords from "../data/medium.json";
 import hardWords from "../data/hard.json";
+import AnimatedCard from "../components/AnimatedCard.jsx";
+import AnimatedButton from "../components/AnimatedButton.jsx";
 
 // Sound tile component - just a speaker icon
 function SoundTile({ sound, index, isMatched, isSelected, onClick, onSpeak }) {
+  const [spring, api] = useSpring(() => ({
+    scale: 1,
+    boxShadow: "0 4px 14px rgba(0, 217, 255, 0.2)",
+  }));
+
   const handleClick = (e) => {
     e.stopPropagation();
     // Play sound when clicked - use readablePhonetic which sounds like it does in the word
@@ -21,9 +30,13 @@ function SoundTile({ sound, index, isMatched, isSelected, onClick, onSpeak }) {
 
   if (isMatched) {
     return (
-      <div className="w-16 h-16 bg-gray-200 rounded-xl cursor-not-allowed opacity-30 transition-all flex items-center justify-center">
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 0.3 }}
+        className="w-16 h-16 bg-white/5 rounded-xl cursor-not-allowed flex items-center justify-center backdrop-blur-sm border border-white/10"
+      >
         <svg
-          className="w-8 h-8 text-gray-400"
+          className="w-8 h-8 text-gray-500"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -35,59 +48,120 @@ function SoundTile({ sound, index, isMatched, isSelected, onClick, onSpeak }) {
             d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
           />
         </svg>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div
-      onClick={handleClick}
-      className={`w-16 h-16 bg-linear-to-br from-blue-500 to-cyan-600 rounded-xl shadow-lg cursor-pointer transition-all hover:scale-110 hover:shadow-xl flex items-center justify-center ${
-        isSelected
-          ? "ring-4 ring-yellow-400 ring-offset-2 scale-110"
-          : "opacity-100"
-      }`}
-      title="Click to hear sound and select"
+    <motion.div
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ delay: index * 0.05, type: "spring", stiffness: 200 }}
+      onMouseEnter={() => {
+        if (!isSelected) {
+          api.start({
+            scale: 1.1,
+            boxShadow: "0 8px 24px rgba(0, 217, 255, 0.4)",
+          });
+        }
+      }}
+      onMouseLeave={() => {
+        if (!isSelected) {
+          api.start({
+            scale: 1,
+            boxShadow: "0 4px 14px rgba(0, 217, 255, 0.2)",
+          });
+        }
+      }}
     >
-      <svg
-        className="w-10 h-10 text-white"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
+      <animated.div
+        onClick={handleClick}
+        style={{
+          transform: spring.scale.to((s) => `scale(${s})`),
+          boxShadow: spring.boxShadow,
+        }}
+        className={`w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl cursor-pointer flex items-center justify-center ${
+          isSelected
+            ? "ring-4 ring-cyan-400 ring-offset-2 ring-offset-[#0a0a0a]"
+            : ""
+        }`}
+        title="Click to hear sound and select"
       >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
-        />
-      </svg>
-    </div>
+        <svg
+          className="w-10 h-10 text-white"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+          />
+        </svg>
+      </animated.div>
+    </motion.div>
   );
 }
 
 // Letter tile component
 function LetterTile({ letter, index, isMatched, isSelected, onClick }) {
+  const [spring, api] = useSpring(() => ({
+    scale: 1,
+    boxShadow: "0 4px 14px rgba(168, 85, 247, 0.2)",
+  }));
+
   if (isMatched) {
     return (
-      <div className="px-6 py-4 bg-gray-200 text-gray-400 rounded-xl font-bold text-xl cursor-not-allowed opacity-30 transition-all">
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 0.3 }}
+        className="px-6 py-4 bg-white/5 text-gray-500 rounded-xl font-bold text-xl cursor-not-allowed backdrop-blur-sm border border-white/10"
+      >
         {letter.grapheme}
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div
-      onClick={() => onClick(index)}
-      className={`px-6 py-4 bg-linear-to-br from-purple-500 to-pink-600 text-white rounded-xl font-bold text-xl shadow-lg cursor-pointer transition-all hover:scale-105 hover:shadow-xl ${
-        isSelected
-          ? "ring-4 ring-yellow-400 ring-offset-2 scale-105"
-          : "opacity-100"
-      }`}
-      title="Click to match with selected sound"
+    <motion.div
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ delay: index * 0.05, type: "spring", stiffness: 200 }}
+      onMouseEnter={() => {
+        if (!isSelected) {
+          api.start({
+            scale: 1.05,
+            boxShadow: "0 8px 24px rgba(168, 85, 247, 0.4)",
+          });
+        }
+      }}
+      onMouseLeave={() => {
+        if (!isSelected) {
+          api.start({
+            scale: 1,
+            boxShadow: "0 4px 14px rgba(168, 85, 247, 0.2)",
+          });
+        }
+      }}
     >
-      {letter.grapheme}
-    </div>
+      <animated.div
+        onClick={() => onClick(index)}
+        style={{
+          transform: spring.scale.to((s) => `scale(${s})`),
+          boxShadow: spring.boxShadow,
+        }}
+        className={`px-6 py-4 bg-gradient-to-br from-purple-500 to-pink-600 text-white rounded-xl font-bold text-xl cursor-pointer ${
+          isSelected
+            ? "ring-4 ring-purple-400 ring-offset-2 ring-offset-[#0a0a0a]"
+            : ""
+        }`}
+        title="Click to match with selected sound"
+      >
+        {letter.grapheme}
+      </animated.div>
+    </motion.div>
   );
 }
 
@@ -101,18 +175,24 @@ function MatchPair({ pair, onUnmatch, onSpeak }) {
   };
 
   return (
-    <div
+    <motion.div
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0, opacity: 0 }}
+      transition={{ type: "spring", stiffness: 200 }}
       onClick={onUnmatch}
-      className={`px-6 py-4 rounded-xl font-bold text-lg shadow-lg cursor-pointer transition-all hover:scale-105 flex items-center gap-3 ${
+      className={`px-6 py-4 rounded-xl font-bold text-lg shadow-lg cursor-pointer transition-all hover:scale-105 flex items-center gap-3 backdrop-blur-sm ${
         pair.isCorrect
-          ? "bg-emerald-100 border-2 border-emerald-400 text-emerald-800"
-          : "bg-red-100 border-2 border-red-400 text-red-800"
+          ? "bg-emerald-500/20 border-2 border-emerald-400 text-emerald-300"
+          : "bg-red-500/20 border-2 border-red-400 text-red-300"
       }`}
       title="Click to unmatch"
     >
-      <button
+      <motion.button
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
         onClick={handleSpeak}
-        className="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-2 flex items-center justify-center transition-all"
+        className="bg-gradient-to-br from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-full p-2 flex items-center justify-center transition-all"
         title="Hear sound"
       >
         <svg
@@ -128,14 +208,14 @@ function MatchPair({ pair, onUnmatch, onSpeak }) {
             d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
           />
         </svg>
-      </button>
-      <span className="text-xl">→</span>
-      <span className="bg-purple-500 text-white px-4 py-2 rounded text-xl">
+      </motion.button>
+      <span className="text-xl text-white">→</span>
+      <span className="bg-gradient-to-br from-purple-500 to-pink-600 text-white px-4 py-2 rounded text-xl">
         {pair.letter.grapheme}
       </span>
       {pair.isCorrect ? (
         <svg
-          className="w-5 h-5 text-emerald-600"
+          className="w-5 h-5 text-emerald-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -149,7 +229,7 @@ function MatchPair({ pair, onUnmatch, onSpeak }) {
         </svg>
       ) : (
         <svg
-          className="w-5 h-5 text-red-600"
+          className="w-5 h-5 text-red-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -162,7 +242,7 @@ function MatchPair({ pair, onUnmatch, onSpeak }) {
           />
         </svg>
       )}
-    </div>
+    </motion.div>
   );
 }
 
@@ -528,153 +608,187 @@ Return a JSON object with an array of word objects, where each object contains:
   // Show input screen if game hasn't started
   if (!gameStarted) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-indigo-100 via-purple-50 to-pink-100 flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4">
         <div className="max-w-2xl w-full">
-          <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12">
+          <AnimatedCard className="p-8 md:p-12">
             {/* Header */}
-            <div className="text-center mb-8">
-              <h1 className="text-5xl md:text-6xl font-bold bg-linear-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-8"
+            >
+              <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-4">
                 Letter-Sound Match
               </h1>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              <p className="text-lg text-gray-300 max-w-2xl mx-auto">
                 Enter words, then match sounds to letters and letter
                 combinations! Click a sound, then click the matching letter.
               </p>
-            </div>
+            </motion.div>
 
             {/* Back Button */}
             {onBack && (
-              <button
+              <AnimatedButton
                 onClick={onBack}
-                className="mb-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-lg transition-all"
+                variant="secondary"
+                className="mb-4"
               >
                 ← Back to Games
-              </button>
+              </AnimatedButton>
             )}
 
             {/* Practice Mode Selection */}
-            <div className="mb-8">
-              <h3 className="text-xl font-semibold text-gray-700 mb-4 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mb-8"
+            >
+              <h3 className="text-xl font-semibold text-gray-200 mb-4 text-center">
                 Choose Practice Mode:
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => {
                     setShowCustomInput(false);
                     handleStartGame("easy");
                   }}
                   disabled={loading}
-                  className="px-6 py-4 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="px-6 py-4 bg-gradient-to-br from-emerald-500 to-green-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-emerald-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed glass-card"
                 >
                   <div className="text-2xl mb-2">🟢</div>
                   <div className="font-bold text-lg">Practice Easy</div>
                   <div className="text-sm opacity-90">
                     Simple 3-4 letter words
                   </div>
-                </button>
-                <button
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => {
                     setShowCustomInput(false);
                     handleStartGame("medium");
                   }}
                   disabled={loading}
-                  className="px-6 py-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="px-6 py-4 bg-gradient-to-br from-yellow-500 to-orange-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-yellow-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed glass-card"
                 >
                   <div className="text-2xl mb-2">🟡</div>
                   <div className="font-bold text-lg">Practice Medium</div>
                   <div className="text-sm opacity-90">
                     Complex letter combinations
                   </div>
-                </button>
-                <button
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => {
                     setShowCustomInput(false);
                     handleStartGame("hard");
                   }}
                   disabled={loading}
-                  className="px-6 py-4 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="px-6 py-4 bg-gradient-to-br from-red-500 to-pink-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-red-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed glass-card"
                 >
                   <div className="text-2xl mb-2">🔴</div>
                   <div className="font-bold text-lg">Practice Hard</div>
                   <div className="text-sm opacity-90">
                     Tricky irregular words
                   </div>
-                </button>
-                <button
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => {
                     setShowCustomInput(!showCustomInput);
                     setSelectedDifficulty(null);
                   }}
                   disabled={loading}
-                  className={`px-6 py-4 font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${
+                  className={`px-6 py-4 font-semibold rounded-xl shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed glass-card ${
                     showCustomInput
-                      ? "bg-blue-600 hover:bg-blue-700 text-white border-2 border-blue-800"
-                      : "bg-blue-500 hover:bg-blue-600 text-white"
+                      ? "bg-gradient-to-br from-blue-600 to-cyan-600 text-white border-2 border-cyan-400"
+                      : "bg-gradient-to-br from-blue-500 to-cyan-600 text-white"
                   }`}
                 >
                   <div className="text-2xl mb-2">✏️</div>
                   <div className="font-bold text-lg">Input Your Own</div>
                   <div className="text-sm opacity-90">Enter custom words</div>
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
 
             {/* Custom Input Section - Show when "Input your own" is selected */}
-            {showCustomInput && (
-              <div className="space-y-4 mb-6 p-6 bg-blue-50 rounded-xl border-2 border-blue-200">
-                <h3 className="text-xl font-semibold text-gray-700 text-center">
-                  Enter Your Own Words:
-                </h3>
-                <textarea
-                  value={wordsInput}
-                  onChange={(e) => setWordsInput(e.target.value)}
-                  placeholder="Enter words separated by commas or new lines...&#10;Example: ship, chat, thing"
-                  className="w-full px-6 py-4 text-lg border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[120px] resize-none"
-                  disabled={loading}
-                />
-                <button
-                  onClick={() => handleStartGame(null)}
-                  disabled={loading || !wordsInput.trim()}
-                  className="w-full px-8 py-4 bg-linear-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-lg"
+            <AnimatePresence>
+              {showCustomInput && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="space-y-4 mb-6 p-6 glass-card border-2 border-cyan-500/30"
                 >
-                  {loading ? (
-                    <span className="flex items-center justify-center gap-2">
-                      <svg
-                        className="animate-spin h-5 w-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      Processing words...
-                    </span>
-                  ) : (
-                    "Start Game"
-                  )}
-                </button>
-              </div>
-            )}
+                  <h3 className="text-xl font-semibold text-gray-200 text-center">
+                    Enter Your Own Words:
+                  </h3>
+                  <textarea
+                    value={wordsInput}
+                    onChange={(e) => setWordsInput(e.target.value)}
+                    placeholder="Enter words separated by commas or new lines...&#10;Example: ship, chat, thing"
+                    className="w-full px-6 py-4 text-lg bg-white/5 border-2 border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all disabled:bg-white/5 disabled:cursor-not-allowed min-h-[120px] resize-none text-white placeholder:text-gray-500"
+                    disabled={loading}
+                  />
+                  <AnimatedButton
+                    onClick={() => handleStartGame(null)}
+                    disabled={loading || !wordsInput.trim()}
+                    variant="primary"
+                    className="w-full text-lg"
+                  >
+                    {loading ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <svg
+                          className="animate-spin h-5 w-5"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                        Processing words...
+                      </span>
+                    ) : (
+                      "Start Game"
+                    )}
+                  </AnimatedButton>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* Error Message */}
-            {error && (
-              <div className="p-4 bg-red-50 border-2 border-red-200 text-red-700 rounded-xl font-medium">
-                {error}
-              </div>
-            )}
-          </div>
+            <AnimatePresence>
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="p-4 bg-red-500/20 border-2 border-red-400 text-red-300 rounded-xl font-medium backdrop-blur-sm"
+                >
+                  {error}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </AnimatedCard>
         </div>
       </div>
     );
@@ -682,29 +796,36 @@ Return a JSON object with an array of word objects, where each object contains:
 
   // Game screen
   return (
-    <div className="min-h-screen w-full bg-linear-to-br from-indigo-100 via-purple-50 to-pink-100 flex flex-col p-6">
+    <div className="min-h-screen w-full flex flex-col p-6">
       {/* Back Button */}
       {onBack && (
-        <button
+        <AnimatedButton
           onClick={onBack}
-          className="mb-4 px-4 py-2 bg-white hover:bg-gray-100 text-gray-700 font-medium rounded-lg transition-all shadow-md self-start"
+          variant="secondary"
+          className="mb-4 self-start"
         >
           ← Back to Games
-        </button>
+        </AnimatedButton>
       )}
 
       {/* Progress Bar */}
-      <div className="mb-6">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-6"
+      >
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
-            <span className="text-lg font-semibold text-gray-700">
+            <span className="text-lg font-semibold text-gray-200">
               Word {currentWordIndex + 1} of {words.length}
             </span>
             {selectedDifficulty && (
-              <span
+              <motion.span
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
                 className={`px-3 py-1 rounded-full text-sm font-semibold text-white ${
                   selectedDifficulty === "easy"
-                    ? "bg-green-500"
+                    ? "bg-emerald-500"
                     : selectedDifficulty === "medium"
                     ? "bg-yellow-500"
                     : "bg-red-500"
@@ -712,28 +833,37 @@ Return a JSON object with an array of word objects, where each object contains:
               >
                 {selectedDifficulty.charAt(0).toUpperCase() +
                   selectedDifficulty.slice(1)}
-              </span>
+              </motion.span>
             )}
           </div>
-          <div className="flex-1 mx-4 h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-linear-to-r from-blue-600 to-cyan-600 transition-all duration-300"
-              style={{
+          <div className="flex-1 mx-4 h-2 bg-white/10 rounded-full overflow-hidden backdrop-blur-sm">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{
                 width: `${((currentWordIndex + 1) / words.length) * 100}%`,
               }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="h-full bg-gradient-to-r from-cyan-500 to-blue-600"
             />
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Game Content */}
       <div className="flex-1 flex flex-col items-center justify-center max-w-7xl mx-auto w-full py-4">
         {/* Word Display - Just speaker icon */}
-        <div className="text-center mb-8 w-full">
-          <div className="inline-block p-6 bg-white rounded-3xl shadow-xl border-2 border-gray-200">
-            <button
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-8 w-full"
+        >
+          <AnimatedCard className="inline-block p-6">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               onClick={() => speakText(currentWord?.word || "")}
-              className="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-4 shadow-lg transition-all hover:scale-110"
+              className="bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-full p-4 shadow-lg transition-all"
               title="Speak word"
             >
               <svg
@@ -749,37 +879,48 @@ Return a JSON object with an array of word objects, where each object contains:
                   d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
                 />
               </svg>
-            </button>
-            <p className="text-sm text-gray-600 font-medium mt-3">
+            </motion.button>
+            <p className="text-sm text-gray-300 font-medium mt-3">
               Click to hear the word
             </p>
-          </div>
-        </div>
+          </AnimatedCard>
+        </motion.div>
 
         {/* Matching Area */}
-        {matchedPairs.length > 0 && (
-          <div className="w-full mb-8">
-            <h3 className="text-2xl font-semibold text-gray-700 mb-4 text-center">
-              Matched Pairs:
-            </h3>
-            <div className="flex flex-wrap gap-4 justify-center">
-              {matchedPairs.map((pair, index) => (
-                <MatchPair
-                  key={index}
-                  pair={pair}
-                  onUnmatch={() => handleUnmatch(index)}
-                  onSpeak={speakText}
-                />
-              ))}
-            </div>
-          </div>
-        )}
+        <AnimatePresence>
+          {matchedPairs.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="w-full mb-8"
+            >
+              <h3 className="text-2xl font-semibold text-gray-200 mb-4 text-center">
+                Matched Pairs:
+              </h3>
+              <div className="flex flex-wrap gap-4 justify-center">
+                {matchedPairs.map((pair, index) => (
+                  <MatchPair
+                    key={index}
+                    pair={pair}
+                    onUnmatch={() => handleUnmatch(index)}
+                    onSpeak={speakText}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Two Column Layout: Sounds (speaker icons) and Letters */}
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           {/* Sounds Column - Just speaker icons */}
-          <div>
-            <h3 className="text-2xl font-semibold text-gray-700 mb-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <h3 className="text-2xl font-semibold text-gray-200 mb-4 text-center">
               Sounds (Click to hear and select):
             </h3>
             <div className="flex flex-wrap gap-4 justify-center">
@@ -795,11 +936,15 @@ Return a JSON object with an array of word objects, where each object contains:
                 />
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Letters Column */}
-          <div>
-            <h3 className="text-2xl font-semibold text-gray-700 mb-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <h3 className="text-2xl font-semibold text-gray-200 mb-4 text-center">
               Letters (Click to match):
             </h3>
             <div className="flex flex-wrap gap-4 justify-center">
@@ -814,41 +959,57 @@ Return a JSON object with an array of word objects, where each object contains:
                 />
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Result Message and Next Button */}
-        {allCorrect && (
-          <div className="w-full max-w-2xl">
-            <div className="p-8 rounded-2xl font-semibold text-2xl text-center mb-6 bg-emerald-50 border-2 border-emerald-200 text-emerald-700">
-              <div className="flex flex-col items-center gap-4">
-                <svg
-                  className="w-12 h-12"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span>Perfect! All matches are correct!</span>
-              </div>
-            </div>
-
-            <button
-              onClick={handleNext}
-              className="w-full py-6 bg-linear-to-r from-emerald-500 to-teal-600 text-white font-bold text-2xl rounded-xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all animate-pulse hover:animate-none"
+        <AnimatePresence>
+          {allCorrect && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ type: "spring", stiffness: 200 }}
+              className="w-full max-w-2xl"
             >
-              {currentWordIndex < words.length - 1
-                ? "Next Word →"
-                : "Finish Game"}
-            </button>
-          </div>
-        )}
+              <motion.div
+                initial={{ y: 20 }}
+                animate={{ y: 0 }}
+                className="p-8 rounded-2xl font-semibold text-2xl text-center mb-6 bg-emerald-500/20 border-2 border-emerald-400 text-emerald-300 backdrop-blur-sm"
+              >
+                <div className="flex flex-col items-center gap-4">
+                  <motion.svg
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+                    className="w-12 h-12"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </motion.svg>
+                  <span>Perfect! All matches are correct!</span>
+                </div>
+              </motion.div>
+
+              <AnimatedButton
+                onClick={handleNext}
+                variant="success"
+                className="w-full py-6 text-2xl"
+              >
+                {currentWordIndex < words.length - 1
+                  ? "Next Word →"
+                  : "Finish Game"}
+              </AnimatedButton>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
