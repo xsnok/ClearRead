@@ -4,7 +4,7 @@ import ScrollReveal from "../components/ScrollReveal.jsx";
 import AnimatedButton from "../components/AnimatedButton.jsx";
 
 export default function GameSelector({ onSelectGame }) {
-  const games = [
+  const allCards = [
     {
       id: "syllable",
       name: "Syllable Challenge",
@@ -12,6 +12,7 @@ export default function GameSelector({ onSelectGame }) {
         "Practice breaking words into syllables and arranging them in the correct order. Perfect for improving phonological awareness!",
       icon: "🔤",
       gradient: "from-purple-500 to-pink-600",
+      textAlign: "text-center",
     },
     {
       id: "lettersound",
@@ -20,6 +21,16 @@ export default function GameSelector({ onSelectGame }) {
         "Match sounds (phonemes) to letters and letter combinations (graphemes). Great for understanding how letters make sounds!",
       icon: "🔗",
       gradient: "from-cyan-500 to-blue-600",
+      textAlign: "text-center",
+    },
+    {
+      id: "dashboard",
+      name: "Progress Dashboard",
+      description:
+        "View your scores, track improvement, and see where you can practice more",
+      icon: "📊",
+      gradient: "from-purple-500 to-pink-600",
+      textAlign: "text-center",
     },
   ];
 
@@ -43,9 +54,14 @@ export default function GameSelector({ onSelectGame }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-cyan-400 via-purple-500 to-blue-500 bg-clip-text text-transparent mb-4"
+              className="text-6xl md:text-7xl font-bold text-white mb-4"
+              style={{
+                fontFamily: "'Plaster', cursive",
+                textShadow:
+                  "0 0 10px rgba(59, 130, 246, 0.3), 0 0 20px rgba(59, 130, 246, 0.2), 0 0 30px rgba(59, 130, 246, 0.1)",
+              }}
             >
-              Dyslexia Learning Games
+              Funlexia
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -63,86 +79,63 @@ export default function GameSelector({ onSelectGame }) {
           </div>
         </ScrollReveal>
 
-        {/* Games Grid */}
+        {/* All Cards in a Row */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 items-stretch"
         >
-          {games.map((game, index) => (
+          {allCards.map((card, index) => (
             <motion.div
-              key={game.id}
+              key={card.id}
               variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0 },
               }}
+              className="flex"
             >
               <AnimatedCard
                 delay={index * 0.1}
-                className="p-8 text-left h-full"
+                className={`p-8 ${card.textAlign} h-full flex flex-col w-full`}
               >
                 <button
-                  onClick={() => onSelectGame(game.id)}
-                  className="w-full text-left group"
+                  onClick={() => onSelectGame(card.id)}
+                  className={`w-full ${card.textAlign} group flex flex-col h-full`}
                 >
                   <div className="text-5xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                    {game.icon}
+                    {card.icon}
                   </div>
-                  <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">
-                    {game.name}
+                  <h2
+                    className={`text-2xl font-bold text-white mb-3 transition-colors ${
+                      card.id === "dashboard"
+                        ? "group-hover:text-purple-400"
+                        : "group-hover:text-cyan-400"
+                    }`}
+                  >
+                    {card.name}
                   </h2>
-                  <p className="text-gray-300 mb-6 leading-relaxed">
-                    {game.description}
+                  <p className="text-gray-300 mb-6 leading-relaxed flex-grow">
+                    {card.description}
                   </p>
                   <div
-                    className={`inline-block px-6 py-3 bg-gradient-to-r ${game.gradient} text-white font-semibold rounded-lg group-hover:shadow-lg group-hover:shadow-cyan-500/50 transition-all transform group-hover:scale-105`}
+                    className={`block mx-auto px-6 py-3 bg-gradient-to-r ${
+                      card.gradient
+                    } text-white font-semibold rounded-lg transition-all transform group-hover:scale-105 w-fit ${
+                      card.id === "dashboard"
+                        ? "group-hover:shadow-lg group-hover:shadow-purple-500/50"
+                        : "group-hover:shadow-lg group-hover:shadow-cyan-500/50"
+                    }`}
                   >
-                    Play Game →
+                    {card.id === "dashboard"
+                      ? "View Dashboard →"
+                      : "Play Game →"}
                   </div>
                 </button>
               </AnimatedCard>
             </motion.div>
           ))}
         </motion.div>
-
-        {/* Dashboard Button */}
-        <ScrollReveal direction="up" delay={0.3}>
-          <div className="flex justify-center mb-8">
-            <AnimatedCard
-              delay={0.4}
-              className="p-8 text-center max-w-md w-full"
-            >
-              <button
-                onClick={() => onSelectGame("dashboard")}
-                className="w-full text-center group"
-              >
-                <div className="text-5xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                  📊
-                </div>
-                <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
-                  Progress Dashboard
-                </h2>
-                <p className="text-gray-300 mb-6 leading-relaxed">
-                  View your scores, track improvement, and see where you can
-                  practice more
-                </p>
-                <div className="inline-block px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 text-white font-semibold rounded-lg group-hover:shadow-lg group-hover:shadow-purple-500/50 transition-all transform group-hover:scale-105">
-                  View Dashboard →
-                </div>
-              </button>
-            </AnimatedCard>
-          </div>
-        </ScrollReveal>
-
-        {/* Coming Soon Placeholder */}
-        {games.length < 3 && (
-          <ScrollReveal direction="up" delay={0.5}>
-            <div className="mt-12 text-center">
-              <p className="text-gray-400 text-lg">More games coming soon!</p>
-            </div>
-          </ScrollReveal>
-        )}
       </div>
     </div>
   );
