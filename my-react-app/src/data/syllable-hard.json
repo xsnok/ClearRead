@@ -2,7 +2,7 @@
   "words": [
     {
       "word": "psychology",
-      "phoneticSpelling": "/saɪˈkɑlədʒi/",
+      "phoneticSpelling": "sigh-kol-uh-jee",
       "syllables": [
         {
           "text": "psy",
@@ -24,7 +24,7 @@
     },
     {
       "word": "extraordinary",
-      "phoneticSpelling": "/ɪkˈstrɔrdəˌnɛri/",
+      "phoneticSpelling": "ik-stror-da-ner-ee",
       "syllables": [
         {
           "text": "ex",
@@ -50,7 +50,7 @@
     },
     {
       "word": "responsibility",
-      "phoneticSpelling": "/rɪˌspɑnsəˈbɪlɪti/",
+      "phoneticSpelling": "rih-spon-sa-bil-ih-tee",
       "syllables": [
         {
           "text": "re",
@@ -80,7 +80,7 @@
     },
     {
       "word": "university",
-      "phoneticSpelling": "/ˌjunəˈvɜrsɪti/",
+      "phoneticSpelling": "yoo-nu-ver-sih-tee",
       "syllables": [
         {
           "text": "u",
@@ -106,7 +106,7 @@
     },
     {
       "word": "philosophy",
-      "phoneticSpelling": "/fɪˈlɑsəfi/",
+      "phoneticSpelling": "fil-os-uh-fee",
       "syllables": [
         {
           "text": "phi",
@@ -128,7 +128,7 @@
     },
     {
       "word": "characteristic",
-      "phoneticSpelling": "/ˌkærəktəˈrɪstɪk/",
+      "phoneticSpelling": "kar-uhk-ter-is-tik",
       "syllables": [
         {
           "text": "char",
@@ -154,7 +154,7 @@
     },
     {
       "word": "pronunciation",
-      "phoneticSpelling": "/prəˌnʌnsiˈeɪʃən/",
+      "phoneticSpelling": "pruh-nun-see-ay-shun",
       "syllables": [
         {
           "text": "pro",
@@ -180,7 +180,7 @@
     },
     {
       "word": "environmental",
-      "phoneticSpelling": "/ɪnˌvaɪrənˈmɛntəl/",
+      "phoneticSpelling": "in-vy-run-men-tul",
       "syllables": [
         {
           "text": "en",
@@ -206,7 +206,7 @@
     },
     {
       "word": "communication",
-      "phoneticSpelling": "/kəˌmjunɪˈkeɪʃən/",
+      "phoneticSpelling": "kuh-myoo-nih-kay-shun",
       "syllables": [
         {
           "text": "com",
@@ -232,7 +232,7 @@
     },
     {
       "word": "understanding",
-      "phoneticSpelling": "/ˌʌndərˈstændɪŋ/",
+      "phoneticSpelling": "uhn-der-stand-ing",
       "syllables": [
         {
           "text": "un",
@@ -254,4 +254,3 @@
     }
   ]
 }
-

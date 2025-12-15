@@ -2,7 +2,7 @@
   "words": [
     {
       "word": "cat",
-      "phoneticSpelling": "/kæt/",
+      "phoneticSpelling": "kat",
       "syllables": [
         {
           "text": "cat",
@@ -12,7 +12,7 @@
     },
     {
       "word": "dog",
-      "phoneticSpelling": "/dɔɡ/",
+      "phoneticSpelling": "dawg",
       "syllables": [
         {
           "text": "dog",
@@ -22,7 +22,7 @@
     },
     {
       "word": "sun",
-      "phoneticSpelling": "/sʌn/",
+      "phoneticSpelling": "sun",
       "syllables": [
         {
           "text": "sun",
@@ -32,7 +32,7 @@
     },
     {
       "word": "happy",
-      "phoneticSpelling": "/ˈhæpi/",
+      "phoneticSpelling": "hap-ee",
       "syllables": [
         {
           "text": "hap",
@@ -46,7 +46,7 @@
     },
     {
       "word": "water",
-      "phoneticSpelling": "/ˈwɔtər/",
+      "phoneticSpelling": "waw-ter",
       "syllables": [
         {
           "text": "wa",
@@ -60,7 +60,7 @@
     },
     {
       "word": "table",
-      "phoneticSpelling": "/ˈteɪbəl/",
+      "phoneticSpelling": "tay-bul",
       "syllables": [
         {
           "text": "ta",
@@ -74,7 +74,7 @@
     },
     {
       "word": "music",
-      "phoneticSpelling": "/ˈmjuzɪk/",
+      "phoneticSpelling": "myoo-zik",
       "syllables": [
         {
           "text": "mu",
@@ -88,7 +88,7 @@
     },
     {
       "word": "paper",
-      "phoneticSpelling": "/ˈpeɪpər/",
+      "phoneticSpelling": "pay-per",
       "syllables": [
         {
           "text": "pa",
@@ -102,7 +102,7 @@
     },
     {
       "word": "window",
-      "phoneticSpelling": "/ˈwɪndoʊ/",
+      "phoneticSpelling": "win-doh",
       "syllables": [
         {
           "text": "win",
@@ -116,7 +116,7 @@
     },
     {
       "word": "garden",
-      "phoneticSpelling": "/ˈɡɑrdən/",
+      "phoneticSpelling": "gar-dun",
       "syllables": [
         {
           "text": "gar",
@@ -130,4 +130,3 @@
     }
   ]
 }
-

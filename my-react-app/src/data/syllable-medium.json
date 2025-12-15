@@ -2,7 +2,7 @@
   "words": [
     {
       "word": "beautiful",
-      "phoneticSpelling": "/ˈbjuːtɪfəl/",
+      "phoneticSpelling": "byoo-ti-ful",
       "syllables": [
         {
           "text": "beau",
@@ -20,7 +20,7 @@
     },
     {
       "word": "function",
-      "phoneticSpelling": "/ˈfʌŋkʃən/",
+      "phoneticSpelling": "funk-shun",
       "syllables": [
         {
           "text": "func",
@@ -34,7 +34,7 @@
     },
     {
       "word": "amazing",
-      "phoneticSpelling": "/əˈmeɪzɪŋ/",
+      "phoneticSpelling": "uh-may-zing",
       "syllables": [
         {
           "text": "a",
@@ -52,7 +52,7 @@
     },
     {
       "word": "computer",
-      "phoneticSpelling": "/kəmˈpjutər/",
+      "phoneticSpelling": "kum-pyoo-ter",
       "syllables": [
         {
           "text": "com",
@@ -70,7 +70,7 @@
     },
     {
       "word": "elephant",
-      "phoneticSpelling": "/ˈɛləfənt/",
+      "phoneticSpelling": "el-uh-funt",
       "syllables": [
         {
           "text": "el",
@@ -88,7 +88,7 @@
     },
     {
       "word": "important",
-      "phoneticSpelling": "/ɪmˈpɔrtənt/",
+      "phoneticSpelling": "im-por-tunt",
       "syllables": [
         {
           "text": "im",
@@ -106,7 +106,7 @@
     },
     {
       "word": "butterfly",
-      "phoneticSpelling": "/ˈbʌtərflaɪ/",
+      "phoneticSpelling": "but-er-fly",
       "syllables": [
         {
           "text": "but",
@@ -124,7 +124,7 @@
     },
     {
       "word": "chocolate",
-      "phoneticSpelling": "/ˈtʃɔkəlɪt/",
+      "phoneticSpelling": "chok-uh-lit",
       "syllables": [
         {
           "text": "choc",
@@ -142,7 +142,7 @@
     },
     {
       "word": "adventure",
-      "phoneticSpelling": "/ədˈvɛntʃər/",
+      "phoneticSpelling": "uhd-ven-cher",
       "syllables": [
         {
           "text": "ad",
@@ -160,7 +160,7 @@
     },
     {
       "word": "education",
-      "phoneticSpelling": "/ˌɛdʒʊˈkeɪʃən/",
+      "phoneticSpelling": "ej-uh-kay-shun",
       "syllables": [
         {
           "text": "ed",
@@ -182,4 +182,3 @@
     }
   ]
 }
-

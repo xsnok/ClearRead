@@ -2,7 +2,7 @@
   "words": [
     {
       "word": "psychology",
-      "phoneticSpelling": "/saɪˈkɑlədʒi/",
+      "phoneticSpelling": "sigh-kol-uh-jee",
       "letterSounds": [
         {
           "grapheme": "p",
@@ -62,7 +62,7 @@
     },
     {
       "word": "rhythm",
-      "phoneticSpelling": "/ˈrɪðəm/",
+      "phoneticSpelling": "rith-um",
       "letterSounds": [
         {
           "grapheme": "rh",
@@ -92,7 +92,7 @@
     },
     {
       "word": "mnemonic",
-      "phoneticSpelling": "/nɪˈmɑnɪk/",
+      "phoneticSpelling": "ni-mon-ik",
       "letterSounds": [
         {
           "grapheme": "mn",
@@ -140,7 +140,7 @@
     },
     {
       "word": "xylophone",
-      "phoneticSpelling": "/ˈzaɪləfoʊn/",
+      "phoneticSpelling": "zy-lo-fohn",
       "letterSounds": [
         {
           "grapheme": "x",
@@ -194,7 +194,7 @@
     },
     {
       "word": "chthonic",
-      "phoneticSpelling": "/ˈθɑnɪk/",
+      "phoneticSpelling": "thon-ik",
       "letterSounds": [
         {
           "grapheme": "ch",
@@ -236,7 +236,7 @@
     },
     {
       "word": "symphony",
-      "phoneticSpelling": "/ˈsɪmfəni/",
+      "phoneticSpelling": "sim-fo-nee",
       "letterSounds": [
         {
           "grapheme": "s",
@@ -284,7 +284,7 @@
     },
     {
       "word": "pneumonia",
-      "phoneticSpelling": "/nuˈmoʊniə/",
+      "phoneticSpelling": "noo-mohn-yuh",
       "letterSounds": [
         {
           "grapheme": "p",
@@ -338,7 +338,7 @@
     },
     {
       "word": "tsunami",
-      "phoneticSpelling": "/tsuˈnɑmi/",
+      "phoneticSpelling": "tsoo-nah-mee",
       "letterSounds": [
         {
           "grapheme": "ts",
@@ -380,7 +380,7 @@
     },
     {
       "word": "queue",
-      "phoneticSpelling": "/kju/",
+      "phoneticSpelling": "kyoo",
       "letterSounds": [
         {
           "grapheme": "qu",
@@ -410,7 +410,7 @@
     },
     {
       "word": "phlegm",
-      "phoneticSpelling": "/flɛm/",
+      "phoneticSpelling": "flem",
       "letterSounds": [
         {
           "grapheme": "ph",
@@ -446,4 +446,3 @@
     }
   ]
 }
-

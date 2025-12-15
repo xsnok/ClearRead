@@ -9,7 +9,7 @@ export const speakText = (text) => {
     if (typeof text === "string") {
       // Remove IPA notation markers: /, [, ]
       cleanText = text.replace(/[\/\[\]]/g, "");
-      
+
       // If it's still IPA symbols, try to use a more readable format
       // For now, we'll just remove the slashes and let the TTS try
       // In a real implementation, you might want an IPA to readable text converter
@@ -23,4 +23,3 @@ export const speakText = (text) => {
     window.speechSynthesis.speak(utterance);
   }
 };
-

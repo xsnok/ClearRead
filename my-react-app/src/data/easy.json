@@ -2,7 +2,7 @@
   "words": [
     {
       "word": "cat",
-      "phoneticSpelling": "/kæt/",
+      "phoneticSpelling": "kat",
       "letterSounds": [
         {
           "grapheme": "c",
@@ -26,7 +26,7 @@
     },
     {
       "word": "dog",
-      "phoneticSpelling": "/dɔɡ/",
+      "phoneticSpelling": "dawg",
       "letterSounds": [
         {
           "grapheme": "d",
@@ -50,7 +50,7 @@
     },
     {
       "word": "sun",
-      "phoneticSpelling": "/sʌn/",
+      "phoneticSpelling": "sun",
       "letterSounds": [
         {
           "grapheme": "s",
@@ -74,7 +74,7 @@
     },
     {
       "word": "hat",
-      "phoneticSpelling": "/hæt/",
+      "phoneticSpelling": "hat",
       "letterSounds": [
         {
           "grapheme": "h",
@@ -98,7 +98,7 @@
     },
     {
       "word": "bed",
-      "phoneticSpelling": "/bɛd/",
+      "phoneticSpelling": "bed",
       "letterSounds": [
         {
           "grapheme": "b",
@@ -122,7 +122,7 @@
     },
     {
       "word": "fish",
-      "phoneticSpelling": "/fɪʃ/",
+      "phoneticSpelling": "fish",
       "letterSounds": [
         {
           "grapheme": "f",
@@ -146,7 +146,7 @@
     },
     {
       "word": "ship",
-      "phoneticSpelling": "/ʃɪp/",
+      "phoneticSpelling": "ship",
       "letterSounds": [
         {
           "grapheme": "sh",
@@ -170,7 +170,7 @@
     },
     {
       "word": "chat",
-      "phoneticSpelling": "/tʃæt/",
+      "phoneticSpelling": "chat",
       "letterSounds": [
         {
           "grapheme": "ch",
@@ -194,7 +194,7 @@
     },
     {
       "word": "this",
-      "phoneticSpelling": "/ðɪs/",
+      "phoneticSpelling": "this",
       "letterSounds": [
         {
           "grapheme": "th",
@@ -218,7 +218,7 @@
     },
     {
       "word": "quack",
-      "phoneticSpelling": "/kwæk/",
+      "phoneticSpelling": "quack",
       "letterSounds": [
         {
           "grapheme": "qu",
@@ -242,4 +242,3 @@
     }
   ]
 }
-

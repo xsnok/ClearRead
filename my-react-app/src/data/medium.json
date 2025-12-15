@@ -2,7 +2,7 @@
   "words": [
     {
       "word": "beautiful",
-      "phoneticSpelling": "/ˈbjuːtɪfəl/",
+      "phoneticSpelling": "byoo-ti-ful",
       "letterSounds": [
         {
           "grapheme": "b",
@@ -50,7 +50,7 @@
     },
     {
       "word": "function",
-      "phoneticSpelling": "/ˈfʌŋkʃən/",
+      "phoneticSpelling": "funk-shun",
       "letterSounds": [
         {
           "grapheme": "f",
@@ -104,7 +104,7 @@
     },
     {
       "word": "through",
-      "phoneticSpelling": "/θruː/",
+      "phoneticSpelling": "throo",
       "letterSounds": [
         {
           "grapheme": "th",
@@ -128,7 +128,7 @@
     },
     {
       "word": "knowledge",
-      "phoneticSpelling": "/ˈnɑlɪdʒ/",
+      "phoneticSpelling": "nol-ij",
       "letterSounds": [
         {
           "grapheme": "k",
@@ -182,7 +182,7 @@
     },
     {
       "word": "strength",
-      "phoneticSpelling": "/strɛŋθ/",
+      "phoneticSpelling": "strength",
       "letterSounds": [
         {
           "grapheme": "s",
@@ -224,7 +224,7 @@
     },
     {
       "word": "enough",
-      "phoneticSpelling": "/ɪˈnʌf/",
+      "phoneticSpelling": "i-nuf",
       "letterSounds": [
         {
           "grapheme": "e",
@@ -254,7 +254,7 @@
     },
     {
       "word": "thought",
-      "phoneticSpelling": "/θɔt/",
+      "phoneticSpelling": "thawt",
       "letterSounds": [
         {
           "grapheme": "th",
@@ -278,7 +278,7 @@
     },
     {
       "word": "phone",
-      "phoneticSpelling": "/foʊn/",
+      "phoneticSpelling": "fohn",
       "letterSounds": [
         {
           "grapheme": "ph",
@@ -308,7 +308,7 @@
     },
     {
       "word": "whale",
-      "phoneticSpelling": "/weɪl/",
+      "phoneticSpelling": "wayl",
       "letterSounds": [
         {
           "grapheme": "wh",
@@ -338,7 +338,7 @@
     },
     {
       "word": "bridge",
-      "phoneticSpelling": "/brɪdʒ/",
+      "phoneticSpelling": "brij",
       "letterSounds": [
         {
           "grapheme": "b",
@@ -368,4 +368,3 @@
     }
   ]
 }
-
